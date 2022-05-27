@@ -6,9 +6,14 @@ export interface ButtonProps
   size?: 'small' | 'medium';
 }
 
-const Button = ({ className, children, ...props }: ButtonProps) => {
+const Button = ({
+  className,
+  children,
+  size = 'medium',
+  ...props
+}: ButtonProps) => {
   return (
-    <S.Container className={className} {...props}>
+    <S.Container className={className} size={size} {...props}>
       {children}
     </S.Container>
   );

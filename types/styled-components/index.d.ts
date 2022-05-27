@@ -14,5 +14,6 @@ declare module 'styled-components' {
       netural800: string;
       netural900: string;
     };
+    borderRadius: number;
   }
 }

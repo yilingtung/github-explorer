@@ -12,6 +12,7 @@ const theme: DefaultTheme = {
     netural800: '52, 58, 64', // rgba(52, 58, 64)
     netural900: '33, 37, 41', // rgba(33, 37, 41)
   },
+  borderRadius: 12,
 };
 
 export default theme;

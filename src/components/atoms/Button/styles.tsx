@@ -9,7 +9,7 @@ export const Container = styled.button<Pick<ButtonProps, 'size'>>`
   padding: 0 24px;
   height: ${({ size }) => (size === 'medium' ? '48px' : '40px')};
   border: none;
-  border-radius: 12px;
+  border-radius: ${({ theme }) => theme.borderRadius}px;
   color: white;
   background-color: rgb(${({ theme }) => theme.colors.netural900});
   transition: background-color 0.3s ease-out;
