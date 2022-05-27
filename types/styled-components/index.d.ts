@@ -15,5 +15,6 @@ declare module 'styled-components' {
       netural900: string;
     };
     borderRadius: number;
+    layoutMaxWidth: number;
   }
 }

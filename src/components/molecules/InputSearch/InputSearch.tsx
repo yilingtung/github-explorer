@@ -5,7 +5,7 @@ import { InputProps } from '../../atoms/Input';
 import * as S from './styles';
 
 export interface InputSearchProps extends InputProps {
-  onSumbit?: () => void;
+  onSubmit?: () => void;
 }
 
 const InputSearch = ({
@@ -13,15 +13,15 @@ const InputSearch = ({
   value,
   onChange,
   onClearValue,
-  onSumbit = () => undefined,
+  onSubmit = () => undefined,
   ...props
 }: InputSearchProps) => {
   const handleFormSubmit = useCallback(
     (event: React.SyntheticEvent<HTMLFormElement>) => {
       event.preventDefault();
-      onSumbit();
+      onSubmit();
     },
-    [onSumbit]
+    [onSubmit]
   );
 
   return (
@@ -32,7 +32,7 @@ const InputSearch = ({
         onClearValue={onClearValue}
         {...props}
       />
-      <S.Button onClick={() => onSumbit}>Send</S.Button>
+      <S.Button onClick={onSubmit}>Send</S.Button>
     </S.FormContainer>
   );
 };

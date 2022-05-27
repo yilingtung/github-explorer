@@ -13,6 +13,7 @@ const theme: DefaultTheme = {
     netural900: '33, 37, 41', // rgba(33, 37, 41)
   },
   borderRadius: 12,
+  layoutMaxWidth: 1140,
 };
 
 export default theme;
