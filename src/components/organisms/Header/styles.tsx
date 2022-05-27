@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-import InputSearch from '../../molecules/InputSearch';
-
-export const Input = styled(InputSearch)``;
-
 export const Logo = styled.div`
   margin: 0;
   color: rgb(${({ theme }) => theme.colors.netural900});
