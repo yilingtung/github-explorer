@@ -14,6 +14,13 @@ declare module 'styled-components' {
       netural800: string;
       netural900: string;
     };
+    fontSize: {
+      logo: string;
+      bannerTitle: string;
+      title: string;
+      subtitle: string;
+      paragraph: string;
+    };
     borderRadius: number;
     layoutMaxWidth: number;
   }

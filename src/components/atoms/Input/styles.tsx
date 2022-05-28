@@ -5,7 +5,7 @@ export const Input = styled.input`
   width: 100%;
   padding-left: 22px;
   padding-right: 40px;
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSize.paragraph};
   border: none;
   color: rgb(${({ theme }) => theme.colors.netural600});
   background-color: rgb(${({ theme }) => theme.colors.netural200});
@@ -14,7 +14,7 @@ export const Input = styled.input`
   ::placeholder {
     color: rgb(${({ theme }) => theme.colors.netural500});
     opacity: 0.6;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.fontSize.paragraph};
   }
 
   :focus {

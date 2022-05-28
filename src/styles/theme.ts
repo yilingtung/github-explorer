@@ -12,6 +12,13 @@ const theme: DefaultTheme = {
     netural800: '52, 58, 64', // rgba(52, 58, 64)
     netural900: '33, 37, 41', // rgba(33, 37, 41)
   },
+  fontSize: {
+    logo: '20px',
+    bannerTitle: '40px',
+    title: '24px',
+    subtitle: '20px',
+    paragraph: '16px',
+  },
   borderRadius: 12,
   layoutMaxWidth: 1140,
 };

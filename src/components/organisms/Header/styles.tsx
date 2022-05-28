@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Logo = styled.div`
   margin: 0;
   color: rgb(${({ theme }) => theme.colors.netural900});
-  font-weight: bold;
-  font-size: large;
+  font-weight: 900;
+  font-size: ${({ theme }) => theme.fontSize.logo};
 `;
 
 export const Wrapper = styled.div`
@@ -29,6 +29,7 @@ export const Container = styled.header`
   width: 100%;
   height: 72px;
   padding: 0 12px;
+  background-color: white;
   box-shadow: 0 10px 20px 0
     rgba(${({ theme }) => theme.colors.netural600}, 0.04);
   z-index: 100;
