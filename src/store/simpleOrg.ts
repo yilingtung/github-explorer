@@ -10,16 +10,22 @@ import { GITHUB_API_ENDPOINT } from '../util/constants';
 import errorMap from '../util/maps/errorMap';
 
 export interface SimpleOrgState {
+  dataByName: Record<string, SimpleGithubOrgData>;
   list: {
     status: FetchStatus;
     error: string;
     meta: { totalCount: number; page: number };
     nameList: string[];
   };
-  dataByName: Record<string, SimpleGithubOrgData>;
+  recommend: {
+    status: FetchStatus;
+    error: string;
+    nameList: string[];
+  };
 }
 
 const initialState: SimpleOrgState = {
+  dataByName: {},
   list: {
     status: 'idle',
     error: '',
@@ -29,7 +35,11 @@ const initialState: SimpleOrgState = {
     },
     nameList: [],
   },
-  dataByName: {},
+  recommend: {
+    status: 'idle',
+    error: '',
+    nameList: ['vercel', 'figma', 'mswjs', 'facebook', 'Dcard', 'strapi'],
+  },
 };
 
 export const fetchSimpleOrgsByQuery = createAsyncThunk<
@@ -107,6 +117,69 @@ export const fetchSimpleOrgsByQuery = createAsyncThunk<
   }
 );
 
+export const fetchSimpleRecommendOrgs = createAsyncThunk<
+  {
+    dataByName: SimpleOrgState['dataByName'];
+  },
+  undefined,
+  {
+    state: RootState;
+    rejectValue: { message: string };
+  }
+>(
+  'simpleOrg/fetchSimpleRecommendOrgs',
+  async (_, { rejectWithValue, getState }) => {
+    const {
+      simpleOrg: {
+        recommend: { nameList },
+      },
+    } = getState();
+    try {
+      const { status, message, ...data } = (await fetch(
+        `${GITHUB_API_ENDPOINT}/search/users?q=type:org+in:login+in:name+${encodeURIComponent(
+          nameList.join(' OR ')
+        )}&per_page=${nameList.length}`
+      ).then((r) =>
+        r.json().then((d) => ({ status: r.status, ...d }))
+      )) as ResponseData<{ total_count: number; items: SimpleGithubOrgData[] }>;
+
+      if (status !== 200) {
+        throw new Error(message);
+      }
+
+      const normalizedData = data.items.reduce(
+        (preVal, curVal) => ({
+          byNames: {
+            ...preVal.byNames,
+            [curVal.login]: curVal,
+          },
+        }),
+        {
+          byNames: {},
+        } as {
+          byNames: SimpleOrgState['dataByName'];
+        }
+      );
+
+      return {
+        dataByName: normalizedData.byNames,
+      };
+    } catch (err) {
+      let errMessage = errorMap.COMMON;
+
+      if (err instanceof Error && err.message) {
+        errMessage = err.message;
+      }
+
+      if (errMessage.includes('API rate limit')) {
+        errMessage = errorMap.API_RATE_LIMIT;
+      }
+
+      return rejectWithValue({ message: errMessage });
+    }
+  }
+);
+
 export const simpleOrgSlice = createSlice({
   name: 'simpleOrg',
   initialState,
@@ -124,7 +197,7 @@ export const simpleOrgSlice = createSlice({
         state.list.error = '';
       })
       .addCase(fetchSimpleOrgsByQuery.fulfilled, (state, action) => {
-        state.list.status = 'idle';
+        state.list.status = 'success';
         state.list.meta = action.payload.meta;
         state.list.nameList =
           action.payload.meta.page === 1
@@ -138,6 +211,21 @@ export const simpleOrgSlice = createSlice({
       .addCase(fetchSimpleOrgsByQuery.rejected, (state, action) => {
         state.list.status = 'failed';
         state.list.error = action.payload?.message || '';
+      })
+      .addCase(fetchSimpleRecommendOrgs.pending, (state) => {
+        state.recommend.status = 'loading';
+        state.list.error = '';
+      })
+      .addCase(fetchSimpleRecommendOrgs.fulfilled, (state, action) => {
+        state.recommend.status = 'success';
+        state.dataByName = {
+          ...state.dataByName,
+          ...action.payload.dataByName,
+        };
+      })
+      .addCase(fetchSimpleRecommendOrgs.rejected, (state, action) => {
+        state.recommend.status = 'failed';
+        state.recommend.error = action.payload?.message || '';
       });
   },
 });

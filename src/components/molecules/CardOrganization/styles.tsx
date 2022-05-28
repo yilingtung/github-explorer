@@ -4,8 +4,8 @@ import { CardOrganizationProps } from './CardOrganization';
 export const Thumbnail = styled.div<Pick<CardOrganizationProps, 'thumbnail'>>`
   display: inline-flex;
   flex-shrink: 0;
-  width: 96px;
-  height: 96px;
+  width: 56px;
+  height: 56px;
   border-radius: ${({ theme }) => theme.borderRadius}px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -17,7 +17,7 @@ export const Name = styled.div`
   white-space: nowrap;
   font-size: ${({ theme }) => theme.fontSize.title};
   font-weight: 600;
-  min-height: 32px;
+  line-height: 32px;
   text-overflow: ellipsis;
   overflow: hidden;
 `;
@@ -33,10 +33,15 @@ export const Description = styled.div`
   overflow: hidden;
 `;
 
-export const Content = styled.div`
+interface ContentProps {
+  jusitifyCenter?: React.CSSProperties['justifyContent'];
+}
+
+export const Content = styled.div<ContentProps>`
   display: flex;
   flex: 1;
   flex-direction: column;
+  justify-content: ${({ jusitifyCenter }) => jusitifyCenter};
   margin-left: 24px;
   min-width: 0;
 `;

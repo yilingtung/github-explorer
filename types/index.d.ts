@@ -1,4 +1,4 @@
-export type FetchStatus = 'idle' | 'loading' | 'failed';
+export type FetchStatus = 'idle' | 'loading' | 'success' | 'failed';
 
 export type ResponseData<Data> = Data & {
   status: number;

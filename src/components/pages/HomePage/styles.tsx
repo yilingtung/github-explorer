@@ -14,7 +14,7 @@ export const BannerTitle = styled.div`
 
 export const BannerInput = styled(OrganizationInputSearchStories)`
   width: 100%;
-  max-width: 600px;
+  max-width: 560px;
 `;
 
 export const BannerContainer = styled.div`

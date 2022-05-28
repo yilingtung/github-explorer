@@ -1,10 +1,23 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Provider } from 'react-redux';
+import { withRouter } from 'storybook-addon-react-router-v6';
 
 import RecommendOrganizations from './RecommendOrganizations';
+
+import { store } from '../../../store';
 
 export default {
   title: 'organisms/RecommendOrganizations',
   component: RecommendOrganizations,
+  decorators: [
+    withRouter,
+    (story) => <Provider store={store}>{story()}</Provider>,
+  ],
+  parameters: {
+    reactRouter: {
+      routePath: '/',
+    },
+  },
   argTypes: {},
 } as ComponentMeta<typeof RecommendOrganizations>;
 

@@ -1,4 +1,8 @@
-import CardOrganization from './CardOrganization';
-export type { CardOrganizationProps } from './CardOrganization';
-
-export default CardOrganization;
+export type {
+  CardOrganizationProps,
+  CardOrganizationSkeletonProps,
+} from './CardOrganization';
+export {
+  CardOrganization as default,
+  CardOrganizationSkeleton,
+} from './CardOrganization';

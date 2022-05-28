@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import CardOrganization from './CardOrganization';
+import CardOrganization, { CardOrganizationSkeleton } from './';
 
 export default {
   title: 'molecules/CardOrganization',
@@ -28,3 +28,10 @@ LongText.args = {
   thumbnail:
     'https://images.unsplash.com/photo-1652956815155-5c54d1fc40a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2900&q=80',
 };
+
+const Skeleton: ComponentStory<typeof CardOrganizationSkeleton> = (args) => (
+  <CardOrganizationSkeleton {...args} />
+);
+
+export const WithSkeleton = Skeleton.bind({});
+WithSkeleton.args = {};
