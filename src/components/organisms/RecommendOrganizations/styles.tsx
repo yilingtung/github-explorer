@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { device } from '../../../util/media';
+
 export const Title = styled.div`
   font-size: ${({ theme }) => theme.fontSize.subtitle};
   font-weight: 900;
@@ -12,6 +14,10 @@ export const CardGroup = styled.div`
 
   > * {
     width: 50%;
+
+    @media ${device.tablet} {
+      width: 100%;
+    }
   }
 `;
 
