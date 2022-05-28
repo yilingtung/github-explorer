@@ -1,40 +1,78 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import useMergedRef from '@react-hook/merged-ref';
 
-import { InputProps } from '../../atoms/Input';
+import useOnClickOutside from '../../../util/hooks/useOnClickOutside';
+
+import type { InputProps } from '../../atoms/Input';
 
 import * as S from './styles';
 
 export interface InputSearchProps extends InputProps {
   onSubmit?: () => void;
+  renderSuggestions?: (props: {
+    setSuggestionOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  }) => React.ReactNode;
 }
 
-const InputSearch = ({
-  className,
-  value,
-  onChange,
-  onClearValue,
-  onSubmit = () => undefined,
-  ...props
-}: InputSearchProps) => {
-  const handleFormSubmit = useCallback(
-    (event: React.SyntheticEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      onSubmit();
+const InputSearch = React.forwardRef<HTMLInputElement, InputSearchProps>(
+  (
+    {
+      className,
+      value,
+      onChange,
+      onClearValue,
+      onSubmit = () => undefined,
+      renderSuggestions = () => undefined,
+      ...props
     },
-    [onSubmit]
-  );
+    ref
+  ) => {
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const mergedRef = useMergedRef(ref, inputRef);
+    const suggestionRef = useRef<HTMLDivElement | null>(null);
+    const [isSuggestionOpen, setSuggestionOpen] = useState(false);
 
-  return (
-    <S.FormContainer className={className} onSubmit={handleFormSubmit}>
-      <S.Input
-        value={value}
-        onChange={onChange}
-        onClearValue={onClearValue}
-        {...props}
-      />
-      <S.Button onClick={onSubmit}>Send</S.Button>
-    </S.FormContainer>
-  );
-};
+    const handleOnClickOutside = useCallback(() => {
+      setSuggestionOpen(false);
+    }, []);
+
+    const handleInputFocus = useCallback(() => {
+      setSuggestionOpen(true);
+    }, []);
+
+    const handleFormSubmit = useCallback(
+      (event: React.SyntheticEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        onSubmit();
+      },
+      [onSubmit]
+    );
+
+    useOnClickOutside(
+      [inputRef, suggestionRef],
+      handleOnClickOutside,
+      !isSuggestionOpen
+    );
+
+    return (
+      <S.FormContainer className={className} onSubmit={handleFormSubmit}>
+        <S.Wrapper>
+          <S.Input
+            ref={mergedRef}
+            value={value}
+            onChange={onChange}
+            onClearValue={onClearValue}
+            onFocus={handleInputFocus}
+            {...props}
+          />
+          <S.SuggestionsWrapper ref={suggestionRef}>
+            {isSuggestionOpen && renderSuggestions({ setSuggestionOpen })}
+          </S.SuggestionsWrapper>
+        </S.Wrapper>
+        <S.Button onClick={onSubmit}>Send</S.Button>
+      </S.FormContainer>
+    );
+  }
+);
 
 export default InputSearch;

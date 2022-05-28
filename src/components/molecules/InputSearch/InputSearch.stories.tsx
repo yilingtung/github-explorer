@@ -13,7 +13,7 @@ export default {
 } as ComponentMeta<typeof InputSearch>;
 
 const Template: ComponentStory<typeof InputSearch> = (args) => (
-  <InputSearch {...args} />
+  <InputSearch {...args} renderSuggestions={() => <div>Suggestions</div>} />
 );
 
 export const Default = Template.bind({});

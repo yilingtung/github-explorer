@@ -9,6 +9,18 @@ export const Input = styled(InputComponent)`
   border-bottom-right-radius: 0;
 `;
 
+export const Wrapper = styled.div`
+  flex: 1;
+  position: relative;
+`;
+
+export const SuggestionsWrapper = styled.div`
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+`;
+
 export const Button = styled(ButtonComponent)`
   flex-shrink: 0;
   border-top-left-radius: 0;

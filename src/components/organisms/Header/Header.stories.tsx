@@ -1,12 +1,18 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { withRouter } from 'storybook-addon-react-router-v6';
+import { Provider } from 'react-redux';
 
 import Header from './Header';
+
+import { store } from '../../../store';
 
 export default {
   title: 'organisms/Header',
   component: Header,
-  decorators: [withRouter],
+  decorators: [
+    withRouter,
+    (story) => <Provider store={store}>{story()}</Provider>,
+  ],
   parameters: {
     reactRouter: {
       routePath: '/',

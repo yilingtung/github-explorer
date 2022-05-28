@@ -1,7 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
+import simpleOrgReducer from './simpleOrg';
+
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    simpleOrg: simpleOrgReducer,
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

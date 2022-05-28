@@ -3,7 +3,7 @@ import * as S from './styles';
 export interface CardOrganizationProps {
   className?: string;
   name: string;
-  description: string;
+  description?: string;
   thumbnail: string;
   onClearValue?: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
 }
@@ -19,7 +19,7 @@ const CardOrganization = ({
       <S.Thumbnail thumbnail={thumbnail} />
       <S.Content>
         <S.Name>{name}</S.Name>
-        <S.Description>{description}</S.Description>
+        {description && <S.Description>{description}</S.Description>}
       </S.Content>
     </S.Container>
   );
