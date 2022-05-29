@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
+
 import {
   fetchOrgnizationByLoginName,
   selectOrganization,
@@ -7,6 +8,7 @@ import {
 import useAppDispatch from '../../../util/hooks/useAppDispatch';
 import useAppSelector from '../../../util/hooks/useAppSelector';
 
+import CardError from '../../molecules/CardError';
 import Profile, { ProfileSkeleton } from '../../molecules/Profile';
 import ReposContainer from '../../organisms/ReposContainer';
 
@@ -39,7 +41,16 @@ export const OrganizationPage = ({ className }: OrganizationPageProps) => {
     <S.Container className={className}>
       <S.Content>
         {fetchOrgStatus === 'failed' ? (
-          fetchOrgError
+          <S.ErrorBox>
+            <CardError
+              type={fetchOrgError === 'Not Found' ? 'empty' : 'error'}
+              message={
+                fetchOrgError === 'Not Found'
+                  ? `'${org}' not found.`
+                  : fetchOrgError
+              }
+            />
+          </S.ErrorBox>
         ) : (
           <>
             <S.Sidebar>

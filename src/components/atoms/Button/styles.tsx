@@ -5,6 +5,7 @@ import type { ButtonProps } from './Button';
 export const Container = styled.button<Pick<ButtonProps, 'size'>>`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   padding: 0 24px;
   height: ${({ size }) => (size === 'medium' ? '48px' : '40px')};

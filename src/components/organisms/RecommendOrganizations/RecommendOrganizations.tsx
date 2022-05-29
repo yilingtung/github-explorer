@@ -45,7 +45,7 @@ const CardGroup = () => {
       ) : (
         <>
           {recommendData.map((orgName) => (
-            <Link to={`/${dataByName[orgName].login}`}>
+            <Link key={orgName} to={`/${dataByName[orgName].login}`}>
               <CardOrganization
                 key={dataByName[orgName].id}
                 name={orgName}

@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import {
   fetchRepositoriesByOrg,
+  ReposResonseData,
   selectRepository,
 } from '../../../store/repository';
 import useAppDispatch from '../../../util/hooks/useAppDispatch';
@@ -13,7 +14,9 @@ import {
   filterTypes,
 } from '../../../util/data/filters';
 
-import CardRepo from '../../molecules/CardRepo';
+import RepoList from '../../molecules/RepoList';
+import HintText from '../../atoms/HintText';
+import Button from '../../atoms/Button';
 
 import * as S from './styles';
 
@@ -24,45 +27,83 @@ export interface ReposContainerProps {
 export const ReposContainer = React.memo(
   ({ className }: ReposContainerProps) => {
     const { org } = useParams();
-
     const [searchParams] = useSearchParams();
 
-    const { nameListByParams, dataByRepoFullName } =
-      useAppSelector(selectRepository);
+    const {
+      nameListByParams,
+      dataByRepoFullName,
+      list: { status, error },
+    } = useAppSelector(selectRepository);
     const dispatch = useAppDispatch();
 
-    const reposData = useMemo(() => {
+    const formattedRepos = useMemo(() => {
       if (!org) return undefined;
+
       const paramsKey = `${org}/${searchParams.get('type') || filterTypes[0]}/${
         searchParams.get('sort') || filterSorts[0]
       }/${searchParams.get('direction') || filterDirections[0]}`;
 
-      return nameListByParams[paramsKey];
+      const nameListData: ReposResonseData | undefined =
+        nameListByParams[paramsKey];
+
+      if (!nameListData) return undefined;
+
+      return {
+        meta: nameListData.meta,
+        data: nameListData.repoNames
+          .map((repoFullname) => dataByRepoFullName[repoFullname])
+          .filter((d) => d)
+          .map((d) => ({
+            id: d.id,
+            name: d.name,
+            description: d.description,
+            stars: d.stargazers_count,
+            language: d.language,
+            githubUrl: d.html_url,
+          })),
+      };
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [org, nameListByParams]);
+    }, [org, nameListByParams, dataByRepoFullName]);
 
     useEffect(() => {
-      if (!org || reposData) return;
+      if (!org || formattedRepos) return;
       dispatch(fetchRepositoriesByOrg({ org }));
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [org, reposData]);
+    }, [org, formattedRepos]);
+
+    const handleFetchNextPage = useCallback(() => {
+      if (!org || !formattedRepos?.meta.currentPage) return;
+      dispatch(
+        fetchRepositoriesByOrg({
+          org,
+          page: formattedRepos.meta.currentPage + 1,
+        })
+      );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [org, formattedRepos?.meta.currentPage]);
 
     return (
       <S.Container className={className}>
-        <S.List>
-          {reposData?.repoNames
-            .map((repoFullName) => dataByRepoFullName[repoFullName])
-            .map((repoData) => (
-              <CardRepo
-                key={repoData.id}
-                name={repoData.name}
-                description={repoData.description}
-                stars={repoData.stargazers_count}
-                language={repoData.language}
-                githubUrl={repoData.html_url}
-              />
-            ))}
-        </S.List>
+        <RepoList
+          listHeight={window.innerHeight}
+          listWidth={600}
+          data={formattedRepos?.data || []}
+          disableFetchMore={status === 'failed'}
+          hasNextPage={formattedRepos?.meta?.mightHasNextPage}
+          isFetchingNextPage={status === 'loading'}
+          fetchNextPage={handleFetchNextPage}
+        />
+        {status === 'failed' && (
+          <S.ListFooter>
+            <Button onClick={handleFetchNextPage} size="small">
+              Load More
+            </Button>
+            {error && <HintText>{error}</HintText>}
+          </S.ListFooter>
+        )}
+        {status === 'success' && !formattedRepos?.meta?.mightHasNextPage && (
+          <HintText align="center">No More Repositories.</HintText>
+        )}
       </S.Container>
     );
   }

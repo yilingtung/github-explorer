@@ -17,7 +17,7 @@ import {
   filterTypes,
 } from '../util/data/filters';
 
-interface ReposResonseData {
+export interface ReposResonseData {
   meta: {
     mightHasNextPage: boolean;
     currentPage: number;
@@ -153,13 +153,13 @@ export const repositorySlice = createSlice({
           ...state,
           list: {
             ...state.list,
-            status: 'idle',
+            status: 'success',
           },
           nameListByParams: {
             ...state.nameListByParams,
             [action.payload.params]: {
               ...state.nameListByParams[action.payload.params],
-              ...action.payload.nameListData.meta,
+              meta: { ...action.payload.nameListData.meta },
               repoNames:
                 action.payload.nameListData.meta.currentPage === 1
                   ? action.payload.nameListData.repoNames

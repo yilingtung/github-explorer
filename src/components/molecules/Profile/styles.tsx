@@ -14,9 +14,11 @@ export const Avatar = styled.div<Pick<ProfileProps, 'avtar'>>`
 `;
 
 export const Name = styled.div`
+  display: inline-flex;
   font-size: ${({ theme }) => theme.fontSize.title};
   line-height: 32px;
   font-weight: 600;
+  word-break: break-all;
 `;
 
 export const Description = styled.div`
@@ -32,6 +34,10 @@ export const Content = styled.div`
 
   > :not(:last-child) {
     margin-bottom: 16px;
+  }
+
+  > a {
+    display: inline-flex;
   }
 `;
 

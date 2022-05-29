@@ -13,6 +13,7 @@ import useDebounce from '../../../util/hooks/useDebounce';
 import InputSearch from '../../molecules/InputSearch';
 import SelectList from '../../atoms/SelectList';
 import SelectOption from '../../atoms/SelectOption';
+import HintText from '../../atoms/HintText';
 
 import * as S from './styles';
 
@@ -103,7 +104,9 @@ export const OrganizationInputSearch = ({
       if (status === 'loading') {
         return (
           <SelectList>
-            <SelectOption>Loading...</SelectOption>
+            <SelectOption>
+              <HintText>Loading...</HintText>
+            </SelectOption>
           </SelectList>
         );
       }
@@ -111,7 +114,9 @@ export const OrganizationInputSearch = ({
       if (status === 'failed') {
         return (
           <SelectList>
-            <SelectOption>{error}</SelectOption>
+            <SelectOption>
+              <HintText>{error}</HintText>
+            </SelectOption>
           </SelectList>
         );
       }
@@ -119,7 +124,9 @@ export const OrganizationInputSearch = ({
       if (nameList.length <= 0) {
         return (
           <SelectList>
-            <SelectOption>Empty result.</SelectOption>
+            <SelectOption>
+              <HintText>Empty result.</HintText>
+            </SelectOption>
           </SelectList>
         );
       }
