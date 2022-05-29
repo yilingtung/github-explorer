@@ -22,3 +22,27 @@ export type SimpleGithubOrgData = Pick<
   GithubOrgData,
   'id' | 'login' | 'avatar_url'
 >;
+
+export interface GithubRepository {
+  id: number;
+  full_name: string;
+  name: string;
+  html_url: string;
+  description: string;
+  updated_at: string;
+  language: string;
+  stargazers_count: number;
+}
+
+export type GithubFilterType =
+  | 'all'
+  | 'public'
+  | 'private'
+  | 'forks'
+  | 'sources'
+  | 'member'
+  | 'internal';
+
+export type GithubFilterSort = 'created' | 'updated' | 'pushed' | 'full_name';
+
+export type GithubFilterDirection = 'asc' | 'desc';

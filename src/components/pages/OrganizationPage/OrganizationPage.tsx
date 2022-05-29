@@ -7,8 +7,8 @@ import {
 import useAppDispatch from '../../../util/hooks/useAppDispatch';
 import useAppSelector from '../../../util/hooks/useAppSelector';
 
-import CardRepo from '../../molecules/CardRepo';
 import Profile, { ProfileSkeleton } from '../../molecules/Profile';
+import ReposContainer from '../../organisms/ReposContainer';
 
 import * as S from './styles';
 
@@ -58,27 +58,7 @@ export const OrganizationPage = ({ className }: OrganizationPageProps) => {
               </S.StickyProfile>
             </S.Sidebar>
             <S.Main>
-              <S.List>
-                <CardRepo
-                  name="react"
-                  description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
-                  stars={188510}
-                  language="JavaScript"
-                  githubUrl="https://github.com/Dcard"
-                />
-                <CardRepo
-                  name="react"
-                  description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
-                  stars={188510}
-                  githubUrl="https://github.com/Dcard"
-                />
-                <CardRepo
-                  name="react"
-                  description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
-                  stars={188510}
-                  githubUrl="https://github.com/Dcard"
-                />
-              </S.List>
+              <ReposContainer />
             </S.Main>
           </>
         )}

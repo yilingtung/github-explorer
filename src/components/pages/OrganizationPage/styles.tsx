@@ -9,7 +9,7 @@ export const Main = styled.div`
   display: flex;
   flex-direction: column;
   flex: 3;
-  padding: 40px 0;
+  padding: 40px 0 0 24px;
   height: 400vh;
 `;
 
