@@ -1,34 +1,28 @@
 import styled from 'styled-components';
 
-import OrganizationInputSearchStories from '../../organisms/OrganizationInputSearch';
+import ProfileComponent from '../../molecules/Profile';
 
-export const BannerImg = styled.img`
-  width: 100%;
-  max-width: 320px;
-`;
-
-export const BannerTitle = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.bannerTitle};
-  font-weight: 900;
-`;
-
-export const BannerInput = styled(OrganizationInputSearchStories)`
-  width: 100%;
-  max-width: 600px;
-`;
-
-export const BannerContainer = styled.div`
+export const Main = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  flex: 3;
   padding: 40px 0;
+  height: 400vh;
+`;
 
-  > :not(:last-child) {
-    margin-bottom: 24px;
-  }
+export const Profile = styled(ProfileComponent)`
+  position: sticky;
+  top: 72px;
+`;
+
+export const Sidebar = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 `;
 
 export const Content = styled.div`
+  display: flex;
   flex: 1;
   width: 100%;
   max-width: ${({ theme }) => theme.layoutMaxWidth}px;

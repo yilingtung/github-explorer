@@ -20,6 +20,7 @@ declare module 'styled-components' {
       title: string;
       subtitle: string;
       paragraph: string;
+      small: string;
     };
     borderRadius: number;
     layoutMaxWidth: number;

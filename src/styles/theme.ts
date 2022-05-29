@@ -18,6 +18,7 @@ const theme: DefaultTheme = {
     title: '24px',
     subtitle: '20px',
     paragraph: '16px',
+    small: '14px',
   },
   borderRadius: 12,
   layoutMaxWidth: 1140,

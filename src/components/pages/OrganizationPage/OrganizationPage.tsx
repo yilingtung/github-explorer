@@ -1,11 +1,4 @@
-import RecommendOrganizations from '../../organisms/RecommendOrganizations';
-
-import banner from '../../../assets/images/banner.png';
-
 import * as S from './styles';
-
-import greetings from '../../../util/data/greetings';
-import getRandomItem from '../../../util/functions/getRandomItem';
 
 export interface OrganizationPageProps {
   className?: string;
@@ -14,13 +7,16 @@ export interface OrganizationPageProps {
 export const OrganizationPage = ({ className }: OrganizationPageProps) => {
   return (
     <S.Container className={className}>
-      <S.BannerContainer>
-        <S.BannerImg src={banner} alt="banner" />
-        <S.BannerTitle>{getRandomItem(greetings)}</S.BannerTitle>
-        <S.BannerInput />
-      </S.BannerContainer>
       <S.Content>
-        <RecommendOrganizations />
+        <S.Sidebar>
+          <S.Profile
+            name="facebook"
+            description="test"
+            avtar="https://images.unsplash.com/photo-1652956815155-5c54d1fc40a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2900&q=80"
+            githubUrl="https://github.com/Dcard"
+          />
+        </S.Sidebar>
+        <S.Main>123</S.Main>
       </S.Content>
     </S.Container>
   );
