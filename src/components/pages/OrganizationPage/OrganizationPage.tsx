@@ -1,4 +1,14 @@
+import { useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import {
+  fetchOrgnizationByLoginName,
+  selectOrganization,
+} from '../../../store/organization';
+import useAppDispatch from '../../../util/hooks/useAppDispatch';
+import useAppSelector from '../../../util/hooks/useAppSelector';
+
 import CardRepo from '../../molecules/CardRepo';
+import Profile, { ProfileSkeleton } from '../../molecules/Profile';
 
 import * as S from './styles';
 
@@ -7,40 +17,71 @@ export interface OrganizationPageProps {
 }
 
 export const OrganizationPage = ({ className }: OrganizationPageProps) => {
+  const { org } = useParams();
+  const {
+    dataByLoginName,
+    singleData: { status: fetchOrgStatus, error: fetchOrgError },
+  } = useAppSelector(selectOrganization);
+  const dispatch = useAppDispatch();
+
+  const orgData = useMemo(() => {
+    if (!org) return undefined;
+    return dataByLoginName[org];
+  }, [org, dataByLoginName]);
+
+  useEffect(() => {
+    if (!org || orgData) return;
+    dispatch(fetchOrgnizationByLoginName({ loginName: org }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [org, orgData]);
+
   return (
     <S.Container className={className}>
       <S.Content>
-        <S.Sidebar>
-          <S.Profile
-            name="facebook"
-            description="test"
-            avtar="https://images.unsplash.com/photo-1652956815155-5c54d1fc40a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2900&q=80"
-            githubUrl="https://github.com/Dcard"
-          />
-        </S.Sidebar>
-        <S.Main>
-          <S.List>
-            <CardRepo
-              name="react"
-              description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
-              stars={188510}
-              language="JavaScript"
-              githubUrl="https://github.com/Dcard"
-            />
-            <CardRepo
-              name="react"
-              description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
-              stars={188510}
-              githubUrl="https://github.com/Dcard"
-            />
-            <CardRepo
-              name="react"
-              description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
-              stars={188510}
-              githubUrl="https://github.com/Dcard"
-            />
-          </S.List>
-        </S.Main>
+        {fetchOrgStatus === 'failed' ? (
+          fetchOrgError
+        ) : (
+          <>
+            <S.Sidebar>
+              <S.StickyProfile>
+                {fetchOrgStatus === 'loading' || !orgData ? (
+                  <ProfileSkeleton />
+                ) : (
+                  <Profile
+                    name={orgData.name}
+                    description={orgData.description}
+                    avtar={orgData.avatar_url}
+                    githubUrl={orgData.html_url}
+                    blogUrl={orgData.blog}
+                  />
+                )}
+              </S.StickyProfile>
+            </S.Sidebar>
+            <S.Main>
+              <S.List>
+                <CardRepo
+                  name="react"
+                  description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
+                  stars={188510}
+                  language="JavaScript"
+                  githubUrl="https://github.com/Dcard"
+                />
+                <CardRepo
+                  name="react"
+                  description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
+                  stars={188510}
+                  githubUrl="https://github.com/Dcard"
+                />
+                <CardRepo
+                  name="react"
+                  description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
+                  stars={188510}
+                  githubUrl="https://github.com/Dcard"
+                />
+              </S.List>
+            </S.Main>
+          </>
+        )}
       </S.Content>
     </S.Container>
   );

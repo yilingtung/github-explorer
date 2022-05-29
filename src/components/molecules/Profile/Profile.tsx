@@ -13,7 +13,7 @@ export interface ProfileProps {
   avtar?: string;
   description?: string;
   githubUrl: string;
-  blogUrl?: string;
+  blogUrl?: string | null;
   onClearValue?: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
 }
 
