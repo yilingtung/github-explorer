@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 import ProfileComponent from '../../molecules/Profile';
 
+export const List = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const Main = styled.div`
   display: flex;
   flex-direction: column;

@@ -1,3 +1,5 @@
+import CardRepo from '../../molecules/CardRepo';
+
 import * as S from './styles';
 
 export interface OrganizationPageProps {
@@ -16,7 +18,29 @@ export const OrganizationPage = ({ className }: OrganizationPageProps) => {
             githubUrl="https://github.com/Dcard"
           />
         </S.Sidebar>
-        <S.Main>123</S.Main>
+        <S.Main>
+          <S.List>
+            <CardRepo
+              name="react"
+              description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
+              stars={188510}
+              language="JavaScript"
+              githubUrl="https://github.com/Dcard"
+            />
+            <CardRepo
+              name="react"
+              description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
+              stars={188510}
+              githubUrl="https://github.com/Dcard"
+            />
+            <CardRepo
+              name="react"
+              description="A declarative, efficient, and flexible JavaScript library for building user interfaces."
+              stars={188510}
+              githubUrl="https://github.com/Dcard"
+            />
+          </S.List>
+        </S.Main>
       </S.Content>
     </S.Container>
   );
