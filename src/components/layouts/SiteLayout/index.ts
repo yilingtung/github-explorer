@@ -1,4 +1,2 @@
-import SiteLayout from './SiteLayout';
+export { SiteLayout as default } from './SiteLayout';
 export type { SiteLayoutProps } from './SiteLayout';
-
-export default SiteLayout;

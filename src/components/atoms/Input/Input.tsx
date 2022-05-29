@@ -9,19 +9,19 @@ export interface InputProps
   onClearValue?: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, value, onChange, onClearValue, ...props }, ref) => {
-    return (
-      <S.Container className={className}>
-        <S.Input ref={ref} value={value} onChange={onChange} {...props} />
-        {value && (
-          <S.CloseBtn onClick={onClearValue} type="button">
-            <CloseSvg />
-          </S.CloseBtn>
-        )}
-      </S.Container>
-    );
-  }
+export const Input = React.memo(
+  React.forwardRef<HTMLInputElement, InputProps>(
+    ({ className, value, onChange, onClearValue, ...props }, ref) => {
+      return (
+        <S.Container className={className}>
+          <S.Input ref={ref} value={value} onChange={onChange} {...props} />
+          {value && (
+            <S.CloseBtn onClick={onClearValue} type="button">
+              <CloseSvg />
+            </S.CloseBtn>
+          )}
+        </S.Container>
+      );
+    }
+  )
 );
-
-export default Input;

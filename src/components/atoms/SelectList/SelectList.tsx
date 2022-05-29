@@ -7,8 +7,8 @@ export interface SelectListProps {
   children: React.ReactNode;
 }
 
-const SelectList = ({ className, children }: SelectListProps) => {
-  return <S.Container className={className}>{children}</S.Container>;
-};
-
-export default SelectList;
+export const SelectList = React.memo(
+  ({ className, children }: SelectListProps) => {
+    return <S.Container className={className}>{children}</S.Container>;
+  }
+);

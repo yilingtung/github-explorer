@@ -1,4 +1,2 @@
-import SelectList from './SelectList';
+export { SelectList as default } from './SelectList';
 export type { SelectListProps } from './SelectList';
-
-export default SelectList;

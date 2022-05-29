@@ -1,4 +1,2 @@
-import RecommendOrganizations from './RecommendOrganizations';
+export { RecommendOrganizations as default } from './RecommendOrganizations';
 export type { RecommendOrganizationsProps } from './RecommendOrganizations';
-
-export default RecommendOrganizations;

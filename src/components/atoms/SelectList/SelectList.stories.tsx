@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import SelectList from './SelectList';
+import SelectList from './';
 
 export default {
   title: 'atoms/SelectList',

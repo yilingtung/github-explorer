@@ -22,7 +22,7 @@ export interface OrganizationInputSearchProps {
   className?: string;
 }
 
-const OrganizationInputSearch = ({
+export const OrganizationInputSearch = ({
   className,
 }: OrganizationInputSearchProps) => {
   const navigate = useNavigate();
@@ -142,5 +142,3 @@ const OrganizationInputSearch = ({
     />
   );
 };
-
-export default OrganizationInputSearch;

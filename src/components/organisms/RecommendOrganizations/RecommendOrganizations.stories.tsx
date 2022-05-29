@@ -2,7 +2,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Provider } from 'react-redux';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
-import RecommendOrganizations from './RecommendOrganizations';
+import RecommendOrganizations from './';
 
 import { store } from '../../../store';
 

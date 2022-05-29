@@ -1,3 +1,5 @@
+import React from 'react';
+
 import * as S from './styles';
 
 export interface ButtonProps
@@ -6,17 +8,12 @@ export interface ButtonProps
   size?: 'small' | 'medium';
 }
 
-const Button = ({
-  className,
-  children,
-  size = 'medium',
-  ...props
-}: ButtonProps) => {
-  return (
-    <S.Container className={className} size={size} {...props}>
-      {children}
-    </S.Container>
-  );
-};
-
-export default Button;
+export const Button = React.memo(
+  ({ className, children, size = 'medium', ...props }: ButtonProps) => {
+    return (
+      <S.Container className={className} size={size} {...props}>
+        {children}
+      </S.Container>
+    );
+  }
+);

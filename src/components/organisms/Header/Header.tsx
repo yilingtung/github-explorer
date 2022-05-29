@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import OrganizationInputSearchStories from '../OrganizationInputSearch';
@@ -8,7 +9,7 @@ export interface HeaderProps {
   className?: string;
 }
 
-const Header = ({ className }: HeaderProps) => {
+export const Header = React.memo(({ className }: HeaderProps) => {
   return (
     <S.Container className={className}>
       <S.Wrapper>
@@ -19,6 +20,4 @@ const Header = ({ className }: HeaderProps) => {
       </S.Wrapper>
     </S.Container>
   );
-};
-
-export default Header;
+});

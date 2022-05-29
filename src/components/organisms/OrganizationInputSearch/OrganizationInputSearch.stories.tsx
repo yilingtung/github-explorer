@@ -2,7 +2,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { withRouter } from 'storybook-addon-react-router-v6';
 import { Provider } from 'react-redux';
 
-import OrganizationInputSearch from './OrganizationInputSearch';
+import OrganizationInputSearch from './';
 
 import { store } from '../../../store';
 

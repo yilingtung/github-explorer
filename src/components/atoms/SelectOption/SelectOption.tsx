@@ -8,12 +8,12 @@ export interface SelectOptionProps {
   children: React.ReactNode;
 }
 
-const SelectOption = ({ className, onClick, children }: SelectOptionProps) => {
-  return (
-    <S.Container className={className} onClick={onClick}>
-      {children}
-    </S.Container>
-  );
-};
-
-export default SelectOption;
+export const SelectOption = React.memo(
+  ({ className, onClick, children }: SelectOptionProps) => {
+    return (
+      <S.Container className={className} onClick={onClick}>
+        {children}
+      </S.Container>
+    );
+  }
+);

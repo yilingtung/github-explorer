@@ -11,7 +11,7 @@ export interface HomePageProps {
   className?: string;
 }
 
-const HomePage = ({ className }: HomePageProps) => {
+export const HomePage = ({ className }: HomePageProps) => {
   return (
     <S.Container className={className}>
       <S.BannerContainer>
@@ -25,5 +25,3 @@ const HomePage = ({ className }: HomePageProps) => {
     </S.Container>
   );
 };
-
-export default HomePage;

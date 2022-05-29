@@ -8,19 +8,19 @@ export interface SkeletonProps {
   size?: 'title' | 'subtitle' | 'paragraph';
 }
 
-export const Skeleton = ({
-  className,
-  width,
-  size = 'paragraph',
-}: SkeletonProps) => {
-  return <S.Text className={className} width={width} size={size} />;
-};
+export const Skeleton = React.memo(
+  ({ className, width, size = 'paragraph' }: SkeletonProps) => {
+    return <S.Text className={className} width={width} size={size} />;
+  }
+);
 
 export interface SkeletonSquareProps {
   className?: string;
   size: number | string;
 }
 
-export const SkeletonSquare = ({ className, size }: SkeletonSquareProps) => {
-  return <S.Square className={className} size={size} />;
-};
+export const SkeletonSquare = React.memo(
+  ({ className, size }: SkeletonSquareProps) => {
+    return <S.Square className={className} size={size} />;
+  }
+);

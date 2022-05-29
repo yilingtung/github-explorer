@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import SelectOption from './SelectOption';
+import SelectOption from './';
 
 export default {
   title: 'atoms/SelectOption',

@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import InputSearch from './InputSearch';
+import InputSearch from './';
 
 export default {
   title: 'molecules/InputSearch',

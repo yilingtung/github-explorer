@@ -9,7 +9,7 @@ export interface SiteLayoutProps {
   className?: string;
 }
 
-const SiteLayout = ({ className }: SiteLayoutProps) => {
+export const SiteLayout = ({ className }: SiteLayoutProps) => {
   return (
     <S.Container className={className}>
       <Header />
@@ -19,5 +19,3 @@ const SiteLayout = ({ className }: SiteLayoutProps) => {
     </S.Container>
   );
 };
-
-export default SiteLayout;

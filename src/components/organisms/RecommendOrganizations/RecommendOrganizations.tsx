@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -13,11 +13,7 @@ import CardOrganization, {
 
 import * as S from './styles';
 
-export interface RecommendOrganizationsProps {
-  className?: string;
-}
-
-const RecommendOrganizations = ({ className }: RecommendOrganizationsProps) => {
+const CardGroup = () => {
   const {
     recommend: { status, error, nameList },
     dataByName,
@@ -32,36 +28,48 @@ const RecommendOrganizations = ({ className }: RecommendOrganizationsProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
+  const recommendData = useMemo(() => {
+    return nameList.filter((orgName) => dataByName[orgName]);
+  }, [nameList, dataByName]);
+
   return (
-    <S.Container className={className}>
-      <S.Title>You might be interested</S.Title>
-      <S.CardGroup>
-        {status == 'idle' || status === 'loading' ? (
-          <>
-            {new Array(6).fill(0).map((_, index) => (
-              <CardOrganizationSkeleton key={index} />
-            ))}
-          </>
-        ) : status === 'failed' ? (
-          error
-        ) : (
-          <>
-            {nameList
-              .filter((orgName) => dataByName[orgName])
-              .map((orgName) => (
-                <Link to={`/${dataByName[orgName].login}`}>
-                  <CardOrganization
-                    key={dataByName[orgName].id}
-                    name={orgName}
-                    thumbnail={dataByName[orgName].avatar_url}
-                  />
-                </Link>
-              ))}
-          </>
-        )}
-      </S.CardGroup>
-    </S.Container>
+    <S.CardGroup>
+      {status == 'idle' || status === 'loading' ? (
+        <>
+          {new Array(6).fill(0).map((_, index) => (
+            <CardOrganizationSkeleton key={index} />
+          ))}
+        </>
+      ) : status === 'failed' ? (
+        error
+      ) : (
+        <>
+          {recommendData.map((orgName) => (
+            <Link to={`/${dataByName[orgName].login}`}>
+              <CardOrganization
+                key={dataByName[orgName].id}
+                name={orgName}
+                thumbnail={dataByName[orgName].avatar_url}
+              />
+            </Link>
+          ))}
+        </>
+      )}
+    </S.CardGroup>
   );
 };
 
-export default RecommendOrganizations;
+export interface RecommendOrganizationsProps {
+  className?: string;
+}
+
+export const RecommendOrganizations = React.memo(
+  ({ className }: RecommendOrganizationsProps) => {
+    return (
+      <S.Container className={className}>
+        <S.Title>You might be interested</S.Title>
+        <CardGroup />
+      </S.Container>
+    );
+  }
+);

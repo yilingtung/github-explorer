@@ -11,7 +11,7 @@ export interface OrganizationPageProps {
   className?: string;
 }
 
-const OrganizationPage = ({ className }: OrganizationPageProps) => {
+export const OrganizationPage = ({ className }: OrganizationPageProps) => {
   return (
     <S.Container className={className}>
       <S.BannerContainer>
@@ -25,5 +25,3 @@ const OrganizationPage = ({ className }: OrganizationPageProps) => {
     </S.Container>
   );
 };
-
-export default OrganizationPage;
