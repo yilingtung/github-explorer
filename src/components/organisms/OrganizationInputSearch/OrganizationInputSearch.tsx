@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -80,54 +80,73 @@ export const OrganizationInputSearch = ({
     navigateToOrganization(inputValue);
   }, [navigateToOrganization, inputValue]);
 
-  const renderSuggestions = useCallback(() => {
-    if (debounceInputValue === '') return undefined;
+  const handleSelectOption = useCallback(
+    (
+      name: string,
+      _setSuggestionOpen: React.Dispatch<React.SetStateAction<boolean>>
+    ) => {
+      _setSuggestionOpen(false);
+      setInputValue(name);
+      navigateToOrganization(name);
+    },
+    [navigateToOrganization]
+  );
 
-    if (status === 'loading') {
+  const renderSuggestions = useCallback(
+    ({
+      setSuggestionOpen,
+    }: {
+      setSuggestionOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    }) => {
+      if (debounceInputValue === '') return undefined;
+
+      if (status === 'loading') {
+        return (
+          <SelectList>
+            <SelectOption>Loading...</SelectOption>
+          </SelectList>
+        );
+      }
+
+      if (status === 'failed') {
+        return (
+          <SelectList>
+            <SelectOption>{error}</SelectOption>
+          </SelectList>
+        );
+      }
+
+      if (nameList.length <= 0) {
+        return (
+          <SelectList>
+            <SelectOption>Empty result.</SelectOption>
+          </SelectList>
+        );
+      }
+
       return (
         <SelectList>
-          <SelectOption>Loading...</SelectOption>
+          {nameList.map((name) => (
+            <S.ItemContainer
+              key={name}
+              onClick={() => handleSelectOption(name, setSuggestionOpen)}
+            >
+              <S.Thumbnail thumbnail={dataByName[name].avatar_url} />
+              <S.Name>{name}</S.Name>
+            </S.ItemContainer>
+          ))}
         </SelectList>
       );
-    }
-
-    if (status === 'failed') {
-      return (
-        <SelectList>
-          <SelectOption>{error}</SelectOption>
-        </SelectList>
-      );
-    }
-
-    if (nameList.length <= 0) {
-      return (
-        <SelectList>
-          <SelectOption>Empty result.</SelectOption>
-        </SelectList>
-      );
-    }
-
-    return (
-      <SelectList>
-        {nameList.map((name) => (
-          <S.ItemContainer
-            key={name}
-            onClick={() => navigateToOrganization(name)}
-          >
-            <S.Thumbnail thumbnail={dataByName[name].avatar_url} />
-            <S.Name>{name}</S.Name>
-          </S.ItemContainer>
-        ))}
-      </SelectList>
-    );
-  }, [
-    status,
-    error,
-    nameList,
-    dataByName,
-    debounceInputValue,
-    navigateToOrganization,
-  ]);
+    },
+    [
+      status,
+      error,
+      nameList,
+      dataByName,
+      debounceInputValue,
+      handleSelectOption,
+    ]
+  );
 
   return (
     <InputSearch
