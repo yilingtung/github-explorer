@@ -11,6 +11,7 @@ import useAppSelector from '../../../util/hooks/useAppSelector';
 import CardError from '../../molecules/CardError';
 import Profile, { ProfileSkeleton } from '../../molecules/Profile';
 import ReposContainer from '../../organisms/ReposContainer';
+import ReposFilters from '../../organisms/ReposFilters';
 
 import * as S from './styles';
 
@@ -69,6 +70,7 @@ export const OrganizationPage = ({ className }: OrganizationPageProps) => {
               </S.StickyProfile>
             </S.Sidebar>
             <S.Main>
+              <ReposFilters />
               <ReposContainer />
             </S.Main>
           </>

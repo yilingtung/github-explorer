@@ -10,6 +10,10 @@ export const Main = styled.div`
   flex-direction: column;
   flex: 1;
   padding: 40px 0 80px 24px;
+
+  > :not(:last-child) {
+    margin-bottom: 24px;
+  }
 `;
 
 export const StickyProfile = styled.div`

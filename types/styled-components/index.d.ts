@@ -4,6 +4,7 @@ import 'styled-components';
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
+      primary: string;
       netural100: string;
       netural200: string;
       netural300: string;

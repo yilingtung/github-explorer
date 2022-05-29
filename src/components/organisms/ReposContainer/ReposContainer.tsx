@@ -8,6 +8,7 @@ import {
 } from '../../../store/repository';
 import useAppDispatch from '../../../util/hooks/useAppDispatch';
 import useAppSelector from '../../../util/hooks/useAppSelector';
+import getValidRepoFilters from '../../../util/functions/getValidRepoFilters';
 import {
   filterDirections,
   filterSorts,
@@ -63,24 +64,59 @@ export const ReposContainer = React.memo(
           })),
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [org, nameListByParams, dataByRepoFullName]);
+    }, [
+      org,
+      nameListByParams,
+      dataByRepoFullName,
+      searchParams.get('type'), // eslint-disable-line react-hooks/exhaustive-deps
+      searchParams.get('sort'), // eslint-disable-line react-hooks/exhaustive-deps
+      searchParams.get('direction'), // eslint-disable-line react-hooks/exhaustive-deps
+    ]);
 
     useEffect(() => {
       if (!org || formattedRepos) return;
-      dispatch(fetchRepositoriesByOrg({ org }));
+
+      const filters = getValidRepoFilters(
+        Object.fromEntries(searchParams.entries())
+      );
+
+      dispatch(
+        fetchRepositoriesByOrg({
+          org,
+          ...filters,
+        })
+      );
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [org, formattedRepos]);
+    }, [
+      org,
+      formattedRepos,
+      searchParams.get('type'), // eslint-disable-line react-hooks/exhaustive-deps
+      searchParams.get('sort'), // eslint-disable-line react-hooks/exhaustive-deps
+      searchParams.get('direction'), // eslint-disable-line react-hooks/exhaustive-deps
+    ]);
 
     const handleFetchNextPage = useCallback(() => {
       if (!org || !formattedRepos?.meta.currentPage) return;
+
+      const filters = getValidRepoFilters(
+        Object.fromEntries(searchParams.entries())
+      );
+
       dispatch(
         fetchRepositoriesByOrg({
           org,
           page: formattedRepos.meta.currentPage + 1,
+          ...filters,
         })
       );
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [org, formattedRepos?.meta.currentPage]);
+    }, [
+      org,
+      formattedRepos?.meta.currentPage,
+      searchParams.get('type'), // eslint-disable-line react-hooks/exhaustive-deps
+      searchParams.get('sort'), // eslint-disable-line react-hooks/exhaustive-deps
+      searchParams.get('direction'), // eslint-disable-line react-hooks/exhaustive-deps
+    ]);
 
     return (
       <S.Container className={className}>

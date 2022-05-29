@@ -137,6 +137,8 @@ export const OrganizationInputSearch = ({
             <S.ItemContainer
               key={name}
               onClick={() => handleSelectOption(name, setSuggestionOpen)}
+              role="button"
+              tabIndex={0}
             >
               <S.Thumbnail thumbnail={dataByName[name].avatar_url} />
               <S.Name>{name}</S.Name>

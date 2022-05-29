@@ -2,6 +2,7 @@ import type { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   colors: {
+    primary: '0, 106, 166', // rgba(0, 106, 166)
     netural100: '248, 249, 250', // rgba(248, 249, 250)
     netural200: '233, 236, 239', // rgba(233, 236, 239)
     netural300: '222, 226, 230', // rgba(222, 226, 230)
