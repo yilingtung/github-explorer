@@ -10,7 +10,7 @@ import theme from './styles/theme';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import './index.css';
+import GlobalStyle from './styles/globalsStyles';
 
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
@@ -20,6 +20,7 @@ root.render(
     <Provider store={store}>
       <Normalize />
       <ThemeProvider theme={theme}>
+        <GlobalStyle />
         <BrowserRouter>
           <App />
         </BrowserRouter>
