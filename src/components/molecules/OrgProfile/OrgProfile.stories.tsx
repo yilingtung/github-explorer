@@ -1,15 +1,15 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import Profile, { ProfileSkeleton } from '.';
+import OrgProfile, { OrgProfileSkeleton } from '.';
 
 export default {
-  title: 'molecules/Profile',
-  component: Profile,
+  title: 'molecules/OrgProfile',
+  component: OrgProfile,
   argTypes: {},
-} as ComponentMeta<typeof Profile>;
+} as ComponentMeta<typeof OrgProfile>;
 
-const Template: ComponentStory<typeof Profile> = (args) => (
-  <Profile {...args} />
+const Template: ComponentStory<typeof OrgProfile> = (args) => (
+  <OrgProfile {...args} />
 );
 
 export const Default = Template.bind({});
@@ -30,8 +30,8 @@ LongText.args = {
     'https://images.unsplash.com/photo-1652956815155-5c54d1fc40a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2900&q=80',
 };
 
-const Skeleton: ComponentStory<typeof ProfileSkeleton> = (args) => (
-  <ProfileSkeleton {...args} />
+const Skeleton: ComponentStory<typeof OrgProfileSkeleton> = (args) => (
+  <OrgProfileSkeleton {...args} />
 );
 
 export const WithSkeleton = Skeleton.bind({});

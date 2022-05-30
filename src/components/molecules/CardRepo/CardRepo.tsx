@@ -34,7 +34,7 @@ export const CardRepo = React.memo(
           <S.HeaderStarLabel Icon={StarSvg}>{stars}</S.HeaderStarLabel>
         </S.Header>
         <S.Description>{description}</S.Description>
-        <S.Footer> {language && <LanguageTag type={language} />}</S.Footer>
+        <S.Footer>{language && <LanguageTag type={language} />}</S.Footer>
       </S.Container>
     );
   }

@@ -12,7 +12,7 @@ import useElementOnScreen from '../../../util/hooks/useElementOnScreen';
 
 import ScrollTopButton from '../../atoms/ScrollTopButton';
 import CardError from '../../molecules/CardError';
-import Profile, { ProfileSkeleton } from '../../molecules/Profile';
+import OrgProfile, { OrgProfileSkeleton } from '../../molecules/OrgProfile';
 import ReposContainer from '../../organisms/ReposContainer';
 import ReposFilters from '../../organisms/ReposFilters';
 
@@ -35,9 +35,9 @@ const HasOrganization = ({ orgData }: HasOrganizationProps) => {
       <S.Sidebar>
         <S.StickyProfile>
           {fetchOrgStatus === 'loading' || !orgData ? (
-            <ProfileSkeleton />
+            <OrgProfileSkeleton />
           ) : (
-            <Profile
+            <OrgProfile
               name={orgData.name}
               description={orgData.description}
               avtar={orgData.avatar_url}

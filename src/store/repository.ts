@@ -39,12 +39,20 @@ export interface RepositoryState {
     status: FetchStatus;
     error: string;
   };
+  singleData: {
+    status: FetchStatus;
+    error: string;
+  };
 }
 
 const initialState: RepositoryState = {
   dataByRepoFullName: {},
   nameListByParams: {},
   list: {
+    status: 'idle',
+    error: '',
+  },
+  singleData: {
     status: 'idle',
     error: '',
   },
@@ -142,6 +150,54 @@ export const fetchRepositoriesByOrg = createAsyncThunk<
   }
 );
 
+export const fetchSingleRepo = createAsyncThunk<
+  {
+    repoFullName: string;
+    data: GithubRepository;
+  },
+  {
+    org: string;
+    repoName: string;
+  },
+  {
+    rejectValue: { message: string };
+  }
+>(
+  'repository/fetchSingleRepo',
+  async ({ org, repoName }, { rejectWithValue }) => {
+    try {
+      const { status, message, data } = (await fetch(
+        `${GITHUB_API_ENDPOINT}/repos/${org}/${repoName}`
+      ).then((r) =>
+        r
+          .json()
+          .then((d) => ({ status: r.status, message: d.message, data: d }))
+      )) as ResponseData<{ data: GithubRepository }>;
+
+      if (status !== 200) {
+        throw new Error(message);
+      }
+
+      return {
+        repoFullName: `${org}/${repoName}`,
+        data,
+      };
+    } catch (err) {
+      let errMessage = errorMap.COMMON;
+
+      if (err instanceof Error && err.message) {
+        errMessage = err.message;
+      }
+
+      if (errMessage.includes('API rate limit')) {
+        errMessage = errorMap.API_RATE_LIMIT;
+      }
+
+      return rejectWithValue({ message: errMessage });
+    }
+  }
+);
+
 export const repositorySlice = createSlice({
   name: 'repository',
   initialState,
@@ -185,6 +241,39 @@ export const repositorySlice = createSlice({
       .addCase(fetchRepositoriesByOrg.rejected, (state, action) => {
         state.list.status = 'failed';
         state.list.error = action.payload?.message || '';
+      })
+      .addCase(fetchSingleRepo.pending, (state) => {
+        return {
+          ...state,
+          singleData: {
+            ...state.singleData,
+            status: 'loading',
+            error: '',
+          },
+        };
+      })
+      .addCase(fetchSingleRepo.fulfilled, (state, action) => {
+        return {
+          ...state,
+          singleData: {
+            ...state.singleData,
+            status: 'success',
+          },
+          dataByRepoFullName: {
+            ...state.dataByRepoFullName,
+            [action.payload.repoFullName]: action.payload.data,
+          },
+        };
+      })
+      .addCase(fetchSingleRepo.rejected, (state, action) => {
+        return {
+          ...state,
+          singleData: {
+            ...state.singleData,
+            status: 'failed',
+            error: action.payload?.message || '',
+          },
+        };
       });
   },
 });

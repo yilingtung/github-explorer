@@ -10,7 +10,7 @@ import { ReactComponent as LinkSvg } from '../../../assets/icons/link.svg';
 
 import * as S from './styles';
 
-export interface ProfileProps {
+export interface OrgProfileProps {
   className?: string;
   name: string;
   avtar?: string;
@@ -20,7 +20,7 @@ export interface ProfileProps {
   onClearValue?: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
 }
 
-export const Profile = React.memo(
+export const OrgProfile = React.memo(
   ({
     className,
     name,
@@ -28,7 +28,7 @@ export const Profile = React.memo(
     description,
     githubUrl,
     blogUrl,
-  }: ProfileProps) => {
+  }: OrgProfileProps) => {
     return (
       <S.Container className={className}>
         <S.Avatar avtar={avtar} />
@@ -48,12 +48,12 @@ export const Profile = React.memo(
   }
 );
 
-export interface ProfileSkeletonProps {
+export interface OrgProfileSkeletonProps {
   className?: string;
 }
 
-export const ProfileSkeleton = React.memo(
-  ({ className }: ProfileSkeletonProps) => {
+export const OrgProfileSkeleton = React.memo(
+  ({ className }: OrgProfileSkeletonProps) => {
     const isTablet = useMediaQuery(device.tablet);
     const isMobile = useMediaQuery(device.mobile);
 

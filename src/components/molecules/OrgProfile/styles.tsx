@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 import { device } from '../../../util/media';
-import { ProfileProps } from './Profile';
+import { OrgProfileProps } from './OrgProfile';
 
-export const Avatar = styled.div<Pick<ProfileProps, 'avtar'>>`
+export const Avatar = styled.div<Pick<OrgProfileProps, 'avtar'>>`
   display: inline-flex;
   flex-shrink: 0;
   width: 160px;

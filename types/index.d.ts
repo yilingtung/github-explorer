@@ -32,6 +32,8 @@ export interface GithubRepository {
   updated_at: string;
   language: string;
   stargazers_count: number;
+  default_branch: string;
+  topics: string[];
 }
 
 export type GithubFilterType =
