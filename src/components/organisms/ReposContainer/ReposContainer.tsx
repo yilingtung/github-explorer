@@ -9,11 +9,7 @@ import {
 import useAppDispatch from '../../../util/hooks/useAppDispatch';
 import useAppSelector from '../../../util/hooks/useAppSelector';
 import getValidRepoFilters from '../../../util/functions/getValidRepoFilters';
-import {
-  filterDirections,
-  filterSorts,
-  filterTypes,
-} from '../../../util/data/filters';
+import getOrgFilterParamsKey from '../../../util/functions/getOrgFilterParamsKey';
 
 import RepoList from '../../molecules/RepoList';
 import HintText from '../../atoms/HintText';
@@ -40,12 +36,14 @@ export const ReposContainer = React.memo(
     const formattedRepos = useMemo(() => {
       if (!org) return undefined;
 
-      const paramsKey = `${org}/${searchParams.get('type') || filterTypes[0]}/${
-        searchParams.get('sort') || filterSorts[0]
-      }/${searchParams.get('direction') || filterDirections[0]}`;
+      const key = getOrgFilterParamsKey({
+        org,
+        type: searchParams.get('type'),
+        sort: searchParams.get('sort'),
+        direction: searchParams.get('direction'),
+      });
 
-      const nameListData: ReposResonseData | undefined =
-        nameListByParams[paramsKey];
+      const nameListData: ReposResonseData | undefined = nameListByParams[key];
 
       if (!nameListData) return undefined;
 

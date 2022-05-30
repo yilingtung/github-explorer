@@ -16,6 +16,7 @@ import {
   filterSorts,
   filterTypes,
 } from '../util/data/filters';
+import getOrgFilterParamsKey from '../util/functions/getOrgFilterParamsKey';
 
 export interface ReposResonseData {
   meta: {
@@ -110,7 +111,12 @@ export const fetchRepositoriesByOrg = createAsyncThunk<
       );
 
       return {
-        params: `${org}/${type}/${sort}/${direction}`,
+        params: getOrgFilterParamsKey({
+          org,
+          type,
+          sort,
+          direction,
+        }),
         nameListData: {
           meta: {
             mightHasNextPage: data.length >= per_page,
