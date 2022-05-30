@@ -1,9 +1,12 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { Normalize } from 'styled-normalize';
+import { ThemeProvider } from 'styled-components';
 
 import { store } from './store';
+import theme from './styles/theme';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -16,7 +19,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Normalize />
-      <App />
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );

@@ -19,6 +19,7 @@ export interface RepoListProps {
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
   fetchNextPage?: () => void;
+  onClickRepo?: (repoName: string) => void;
 }
 
 export const RepoList = React.memo(
@@ -31,6 +32,7 @@ export const RepoList = React.memo(
     hasNextPage = false,
     isFetchingNextPage = false,
     fetchNextPage,
+    onClickRepo = () => undefined,
   }: RepoListProps) => {
     const itemCount = data.length;
     const isEmpty = data.length <= 0;
@@ -100,6 +102,7 @@ export const RepoList = React.memo(
               githubUrl={repo.githubUrl}
               language={repo.language}
               stars={repo.stars}
+              onClick={() => onClickRepo(repo.name as string)}
             />
           )}
         </S.ItemWrapper>

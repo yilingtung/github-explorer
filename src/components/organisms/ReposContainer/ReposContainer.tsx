@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 
 import {
   fetchRepositoriesByOrg,
@@ -25,6 +25,7 @@ export const ReposContainer = React.memo(
   ({ className }: ReposContainerProps) => {
     const { org } = useParams();
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
 
     const {
       nameListByParams,
@@ -116,6 +117,17 @@ export const ReposContainer = React.memo(
       searchParams.get('direction'), // eslint-disable-line react-hooks/exhaustive-deps
     ]);
 
+    const handleClickRepo = useCallback(
+      (repoName: string) => {
+        navigate(
+          { pathname: `/${org}/${repoName}` },
+          { state: { modal: true } }
+        );
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [org]
+    );
+
     return (
       <S.Container className={className}>
         <RepoList
@@ -126,6 +138,7 @@ export const ReposContainer = React.memo(
           hasNextPage={formattedRepos?.meta?.mightHasNextPage}
           isFetchingNextPage={status === 'loading'}
           fetchNextPage={handleFetchNextPage}
+          onClickRepo={handleClickRepo}
         />
         {status === 'failed' && (
           <S.ListFooter>

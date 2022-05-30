@@ -1,18 +1,40 @@
-import { ThemeProvider } from 'styled-components';
-import { BrowserRouter } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
-import theme from './styles/theme';
 import ScrollToTop from './components/atoms/ScrollToTop';
-import Routes from './routes';
+import SiteLayout from './components/layouts/SiteLayout';
+import HomePage from './components/pages/HomePage';
+import OrganizationPage from './components/pages/OrganizationPage';
+import RepoPage from './components/pages/RepoPage';
 
 function App() {
+  const location = useLocation();
+  const [previousLocation, setPreviousLocation] = useState(() => location);
+  const isModal =
+    location.state &&
+    (location.state as { modal?: boolean }).modal &&
+    previousLocation !== location;
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (!(location.state && (location.state as { modal?: boolean }).modal)) {
+      setPreviousLocation(location);
+    }
+  });
+
   return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes />
-      </BrowserRouter>
-    </ThemeProvider>
+    <>
+      <ScrollToTop />
+      <Routes location={isModal ? previousLocation : location}>
+        <Route path="/" element={<SiteLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path=":org">
+            <Route index element={<OrganizationPage />} />
+            <Route path=":repo" element={<RepoPage />} />
+          </Route>
+        </Route>
+      </Routes>
+    </>
   );
 }
 

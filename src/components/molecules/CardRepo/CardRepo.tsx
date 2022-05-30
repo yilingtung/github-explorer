@@ -14,6 +14,7 @@ export interface CardRepoProps {
   stars: number;
   language?: string;
   githubUrl: string;
+  onClick?: (e: React.SyntheticEvent) => void;
 }
 
 export const CardRepo = React.memo(
@@ -24,9 +25,10 @@ export const CardRepo = React.memo(
     stars,
     language,
     githubUrl,
+    onClick,
   }: CardRepoProps) => {
     return (
-      <S.Container className={className}>
+      <S.Container className={className} onClick={onClick}>
         <S.Header>
           <a href={githubUrl} target="_blank" rel="noreferrer">
             <S.Name>{name}</S.Name>

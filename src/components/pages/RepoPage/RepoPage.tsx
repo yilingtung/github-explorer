@@ -14,10 +14,16 @@ import * as S from './styles';
 
 export interface RepoPageProps {
   className?: string;
+  repoName?: string;
 }
 
-export const RepoPage = ({ className }: RepoPageProps) => {
-  const { org, repo } = useParams();
+export const RepoPage = ({
+  className,
+  repoName: repoNameFromProps,
+}: RepoPageProps) => {
+  const { org, repo: repoFromParams } = useParams();
+  const repo = repoFromParams || repoNameFromProps;
+
   const {
     dataByRepoFullName,
     singleData: { status, error },

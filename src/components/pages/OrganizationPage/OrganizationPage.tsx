@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useMemo, lazy, Suspense } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GithubOrgData } from '../../../../types';
 
 import {
@@ -15,6 +15,9 @@ import CardError from '../../molecules/CardError';
 import OrgProfile, { OrgProfileSkeleton } from '../../molecules/OrgProfile';
 import ReposContainer from '../../organisms/ReposContainer';
 import ReposFilters from '../../organisms/ReposFilters';
+
+const Modal = lazy(() => import('../../atoms/Modal'));
+const RepoPage = lazy(() => import('../RepoPage'));
 
 import * as S from './styles';
 
@@ -62,6 +65,9 @@ export interface OrganizationPageProps {
 
 export const OrganizationPage = ({ className }: OrganizationPageProps) => {
   const { org } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const {
     dataByLoginName,
     singleData: { status: fetchOrgStatus, error: fetchOrgError },
@@ -97,6 +103,17 @@ export const OrganizationPage = ({ className }: OrganizationPageProps) => {
           <HasOrganization orgData={orgData} />
         )}
       </S.Content>
+      {(location?.state as { modal?: boolean })?.modal && (
+        <Suspense>
+          <Modal
+            onDeactive={() => {
+              navigate(-1);
+            }}
+          >
+            <RepoPage repoName={location.pathname.split('/')[2]} />
+          </Modal>
+        </Suspense>
+      )}
     </S.Container>
   );
 };
