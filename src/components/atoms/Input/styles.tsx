@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { device } from '../../../util/media';
+
 export const Input = styled.input`
   height: 48px;
   width: 100%;
@@ -20,6 +22,11 @@ export const Input = styled.input`
   :focus {
     outline: none;
     background-color: rgba(${({ theme }) => theme.colors.netural200}, 0.6);
+  }
+
+  @media ${device.tablet} {
+    padding-left: 12px;
+    padding-right: 32px;
   }
 `;
 
@@ -61,5 +68,9 @@ export const CloseBtn = styled.button`
     > path {
       fill: rgb(${({ theme }) => theme.colors.netural600});
     }
+  }
+
+  @media ${device.tablet} {
+    width: 32px;
   }
 `;

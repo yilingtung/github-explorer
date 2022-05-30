@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+
 import { LabelProps } from './Label';
 
 export const Container = styled.div<Pick<LabelProps, 'iconType'>>`

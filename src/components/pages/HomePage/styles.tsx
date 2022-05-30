@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 
+import { device } from '../../../util/media';
+
 import OrganizationInputSearchStories from '../../organisms/OrganizationInputSearch';
 
 export const BannerImg = styled.img`
   width: 100%;
   max-width: 320px;
+
+  @media ${device.tablet} {
+    max-width: 240px;
+  }
 `;
 
 export const BannerTitle = styled.div`

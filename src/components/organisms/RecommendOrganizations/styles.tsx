@@ -18,6 +18,7 @@ export const CardGroup = styled.div`
     @media ${device.tablet} {
       width: 50%;
     }
+
     @media ${device.mobile} {
       width: 100%;
     }

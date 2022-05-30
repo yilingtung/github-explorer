@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+
+import { device } from '../../../util/media';
 import { ProfileProps } from './Profile';
 
 export const Avatar = styled.div<Pick<ProfileProps, 'avtar'>>`
@@ -11,6 +13,16 @@ export const Avatar = styled.div<Pick<ProfileProps, 'avtar'>>`
   background-repeat: no-repeat;
   background-position: center;
   background-image: url(${({ avtar }) => avtar});
+
+  @media ${device.tablet} {
+    width: 120px;
+    height: 120px;
+  }
+
+  @media ${device.mobile} {
+    width: 96px;
+    height: 96px;
+  }
 `;
 
 export const Name = styled.div`
@@ -48,5 +60,14 @@ export const Container = styled.div`
 
   > :not(:last-child) {
     margin-bottom: 24px;
+  }
+
+  @media ${device.tablet} {
+    flex-direction: row;
+
+    > :not(:last-child) {
+      margin-bottom: 0;
+      margin-right: 16px;
+    }
   }
 `;

@@ -2,6 +2,10 @@ import React, { useCallback, useRef, useState } from 'react';
 import useMergedRef from '@react-hook/merged-ref';
 
 import useOnClickOutside from '../../../util/hooks/useOnClickOutside';
+import useMediaQuery from '../../../util/hooks/useMediaQuery';
+import { device } from '../../../util/media';
+
+import { ReactComponent as SearchSvg } from '../../../assets/icons/search.svg';
 
 import type { InputProps } from '../../atoms/Input';
 
@@ -32,6 +36,7 @@ export const InputSearch = React.memo(
       const mergedRef = useMergedRef(ref, inputRef);
       const suggestionRef = useRef<HTMLDivElement | null>(null);
       const [isSuggestionOpen, setSuggestionOpen] = useState(false);
+      const isTablet = useMediaQuery(device.tablet);
 
       const handleOnClickOutside = useCallback(() => {
         setSuggestionOpen(false);
@@ -72,7 +77,9 @@ export const InputSearch = React.memo(
                 renderSuggestions({ setSuggestionOpen })}
             </S.SuggestionsWrapper>
           </S.Wrapper>
-          <S.Button onClick={onSubmit}>Send</S.Button>
+          <S.Button onClick={onSubmit}>
+            {isTablet ? <SearchSvg /> : 'Search'}
+          </S.Button>
         </S.FormContainer>
       );
     }

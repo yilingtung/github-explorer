@@ -25,6 +25,12 @@ export const Button = styled(ButtonComponent)`
   flex-shrink: 0;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+
+  > svg {
+    path {
+      fill: white;
+    }
+  }
 `;
 
 export const FormContainer = styled.form`

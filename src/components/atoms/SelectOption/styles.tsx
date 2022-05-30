@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import { device } from '../../../util/media';
+
 export const Container = styled.div`
   display: inline-flex;
   align-items: center;
@@ -19,4 +21,8 @@ export const Container = styled.div`
         background-color: rgb(${({ theme }) => theme.colors.netural100});
       }
     `}
+
+  @media ${device.tablet} {
+    padding: 8px;
+  }
 `;

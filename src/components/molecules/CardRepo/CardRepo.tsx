@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Label from '../../atoms/Label';
 import Skeleton from '../../atoms/Skeleton';
 import LanguageTag from '../LanguageTag';
 
@@ -32,7 +31,7 @@ export const CardRepo = React.memo(
           <a href={githubUrl} target="_blank" rel="noreferrer">
             <S.Name>{name}</S.Name>
           </a>
-          <Label Icon={StarSvg}>{stars}</Label>
+          <S.HeaderStarLabel Icon={StarSvg}>{stars}</S.HeaderStarLabel>
         </S.Header>
         <S.Description>{description}</S.Description>
         <S.Footer> {language && <LanguageTag type={language} />}</S.Footer>

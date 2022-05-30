@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { device } from '../../../util/media';
+
 import type { ButtonProps } from './Button';
 
 export const Container = styled.button<Pick<ButtonProps, 'size'>>`
@@ -25,5 +27,9 @@ export const Container = styled.button<Pick<ButtonProps, 'size'>>`
     color: rgb(${({ theme }) => theme.colors.netural500});
     background-color: rgb(${({ theme }) => theme.colors.netural200});
     cursor: default;
+  }
+
+  @media ${device.tablet} {
+    padding: 0 16px;
   }
 `;

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import Label from '../../atoms/Label';
+
 export const Description = styled.div`
   display: -webkit-box;
   min-height: 48px;
@@ -31,6 +33,10 @@ export const Footer = styled.div`
   }
 `;
 
+export const HeaderStarLabel = styled(Label)`
+  flex-shrink: 0;
+`;
+
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -38,6 +44,10 @@ export const Header = styled.div`
 
   > :not(:last-child) {
     margin-right: 8px;
+  }
+
+  > a {
+    min-width: 0;
   }
 `;
 

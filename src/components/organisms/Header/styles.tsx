@@ -1,10 +1,19 @@
 import styled from 'styled-components';
+import { device } from '../../../util/media';
 
 export const Logo = styled.div`
   margin: 0;
   color: rgb(${({ theme }) => theme.colors.netural900});
   font-weight: 900;
   font-size: ${({ theme }) => theme.fontSize.logo};
+
+  @media ${device.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.paragraph};
+  }
+
+  @media ${device.mobile} {
+    width: 72px;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -15,7 +24,7 @@ export const Wrapper = styled.div`
   max-width: ${({ theme }) => theme.layoutMaxWidth}px;
 
   > :not(:last-child) {
-    margin-right: 40px;
+    margin-right: 16px;
   }
 `;
 

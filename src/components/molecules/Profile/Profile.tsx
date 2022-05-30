@@ -1,5 +1,8 @@
 import React from 'react';
 
+import useMediaQuery from '../../../util/hooks/useMediaQuery';
+import { device } from '../../../util/media';
+
 import Label from '../../atoms/Label';
 import Skeleton, { SkeletonSquare } from '../../atoms/Skeleton';
 
@@ -51,9 +54,12 @@ export interface ProfileSkeletonProps {
 
 export const ProfileSkeleton = React.memo(
   ({ className }: ProfileSkeletonProps) => {
+    const isTablet = useMediaQuery(device.tablet);
+    const isMobile = useMediaQuery(device.mobile);
+
     return (
       <S.Container className={className}>
-        <SkeletonSquare size={160} />
+        <SkeletonSquare size={isMobile ? 96 : isTablet ? 120 : 160} />
         <S.Content>
           <Skeleton width="50%" size="title" />
           <Skeleton width="100%" />

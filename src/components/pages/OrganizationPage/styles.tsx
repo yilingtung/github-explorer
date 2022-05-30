@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from '../../../util/media';
 
 export const List = styled.div`
   display: flex;
@@ -13,6 +14,10 @@ export const Main = styled.div`
 
   > :not(:last-child) {
     margin-bottom: 24px;
+  }
+
+  @media ${device.tablet} {
+    padding: 0 0 40px;
   }
 `;
 
@@ -29,6 +34,11 @@ export const Sidebar = styled.div`
   flex-shrink: 0;
   max-width: 280px;
   width: 25%;
+
+  @media ${device.tablet} {
+    max-width: initial;
+    width: 100%;
+  }
 `;
 
 export const ErrorBox = styled.div`
@@ -42,6 +52,10 @@ export const Content = styled.div`
   width: 100%;
   max-width: ${({ theme }) => theme.layoutMaxWidth}px;
   margin: 0 auto;
+
+  @media ${device.tablet} {
+    flex-direction: column;
+  }
 `;
 
 export const Container = styled.div`
