@@ -90,7 +90,7 @@ export const OrganizationPage = ({ className }: OrganizationPageProps) => {
       {fetchOrgStatus === 'failed' ? (
         <S.ErrorBox>
           <CardError
-            type={fetchOrgError === 'Not Found' ? 'empty' : 'error'}
+            type={fetchOrgError === 'Not Found' ? 'notFound' : 'error'}
             message={
               fetchOrgError === 'Not Found'
                 ? `'${org}' not found.`

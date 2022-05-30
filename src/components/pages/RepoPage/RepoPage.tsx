@@ -76,7 +76,7 @@ export const RepoPage = ({
           {status === 'loading' && <RepoProfileSkeleton />}
           {status === 'failed' && (
             <CardError
-              type="error"
+              type={error === 'Not Found' ? 'notFound' : 'error'}
               message={
                 error === 'Not Found' ? `'${org}/${repo}' not found.` : error
               }
