@@ -23,9 +23,7 @@ export const HomePage = ({ className }: HomePageProps) => {
         <S.BannerTitle>{getRandomItem(greetings)}</S.BannerTitle>
         {!isTablet && <S.BannerInput />}
       </S.BannerContainer>
-      <S.Content>
-        <RecommendOrganizations />
-      </S.Content>
+      <RecommendOrganizations />
     </S.Container>
   );
 };

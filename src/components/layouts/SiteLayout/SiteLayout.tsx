@@ -14,7 +14,9 @@ export const SiteLayout = ({ className }: SiteLayoutProps) => {
     <S.Container className={className}>
       <Header />
       <S.Content>
-        <Outlet />
+        <S.Main>
+          <Outlet />
+        </S.Main>
       </S.Content>
     </S.Container>
   );

@@ -46,20 +46,11 @@ export const ErrorBox = styled.div`
   padding: 40px 0;
 `;
 
-export const Content = styled.div`
+export const Container = styled.div`
   display: flex;
   flex: 1;
-  width: 100%;
-  max-width: ${({ theme }) => theme.layoutMaxWidth}px;
-  margin: 0 auto;
 
   @media ${device.tablet} {
     flex-direction: column;
   }
-`;
-
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 12px;
 `;

@@ -34,15 +34,9 @@ export const BannerContainer = styled.div`
   }
 `;
 
-export const Content = styled.div`
-  flex: 1;
-  width: 100%;
-  max-width: ${({ theme }) => theme.layoutMaxWidth}px;
-  margin: 0 auto;
-`;
-
 export const Container = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
-  padding: 0 12px;
+  width: 100%;
 `;

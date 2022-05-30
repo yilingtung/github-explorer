@@ -87,22 +87,20 @@ export const OrganizationPage = ({ className }: OrganizationPageProps) => {
 
   return (
     <S.Container className={className}>
-      <S.Content>
-        {fetchOrgStatus === 'failed' ? (
-          <S.ErrorBox>
-            <CardError
-              type={fetchOrgError === 'Not Found' ? 'empty' : 'error'}
-              message={
-                fetchOrgError === 'Not Found'
-                  ? `'${org}' not found.`
-                  : fetchOrgError
-              }
-            />
-          </S.ErrorBox>
-        ) : (
-          <HasOrganization orgData={orgData} />
-        )}
-      </S.Content>
+      {fetchOrgStatus === 'failed' ? (
+        <S.ErrorBox>
+          <CardError
+            type={fetchOrgError === 'Not Found' ? 'empty' : 'error'}
+            message={
+              fetchOrgError === 'Not Found'
+                ? `'${org}' not found.`
+                : fetchOrgError
+            }
+          />
+        </S.ErrorBox>
+      ) : (
+        <HasOrganization orgData={orgData} />
+      )}
       {(location?.state as { modal?: boolean })?.modal && (
         <Suspense>
           <Modal

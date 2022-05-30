@@ -57,35 +57,33 @@ export const RepoPage = ({
 
   return (
     <S.Container className={className}>
-      <S.Content>
-        {repoData ? (
-          <>
-            <RepoProfile
-              org={org || ''}
-              repo={repo || ''}
-              description={repoData.description}
-              githubUrl={repoData.html_url}
-              language={repoData.language}
-              stars={repoData.stargazers_count}
-              updatedAt={repoData.updated_at}
-              topics={repoData.topics}
+      {repoData ? (
+        <>
+          <RepoProfile
+            org={org || ''}
+            repo={repo || ''}
+            description={repoData.description}
+            githubUrl={repoData.html_url}
+            language={repoData.language}
+            stars={repoData.stargazers_count}
+            updatedAt={repoData.updated_at}
+            topics={repoData.topics}
+          />
+          {readmeData && <Readme content={readmeData} />}
+        </>
+      ) : (
+        <>
+          {status === 'loading' && <RepoProfileSkeleton />}
+          {status === 'failed' && (
+            <CardError
+              type="error"
+              message={
+                error === 'Not Found' ? `'${org}/${repo}' not found.` : error
+              }
             />
-            {readmeData && <Readme content={readmeData} />}
-          </>
-        ) : (
-          <>
-            {status === 'loading' && <RepoProfileSkeleton />}
-            {status === 'failed' && (
-              <CardError
-                type="error"
-                message={
-                  error === 'Not Found' ? `'${org}/${repo}' not found.` : error
-                }
-              />
-            )}
-          </>
-        )}
-      </S.Content>
+          )}
+        </>
+      )}
     </S.Container>
   );
 };
