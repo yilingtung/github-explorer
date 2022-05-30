@@ -6,16 +6,11 @@ import OrganizationInputSearchStories from '../../organisms/OrganizationInputSea
 
 export const BannerImg = styled.img`
   width: 100%;
-  max-width: 320px;
+  max-width: 440px;
 
   @media ${device.tablet} {
-    max-width: 240px;
+    max-width: 400px;
   }
-`;
-
-export const BannerTitle = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.bannerTitle};
-  font-weight: 900;
 `;
 
 export const BannerInput = styled(OrganizationInputSearchStories)`
@@ -28,10 +23,6 @@ export const BannerContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 40px 0;
-
-  > :not(:last-child) {
-    margin-bottom: 24px;
-  }
 `;
 
 export const Container = styled.div`

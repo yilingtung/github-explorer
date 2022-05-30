@@ -1,5 +1,3 @@
-import greetings from '../../../util/data/greetings';
-import getRandomItem from '../../../util/functions/getRandomItem';
 import useMediaQuery from '../../../util/hooks/useMediaQuery';
 import { device } from '../../../util/media';
 
@@ -20,7 +18,6 @@ export const HomePage = ({ className }: HomePageProps) => {
     <S.Container className={className}>
       <S.BannerContainer>
         <S.BannerImg src={banner} alt="banner" />
-        <S.BannerTitle>{getRandomItem(greetings)}</S.BannerTitle>
         {!isTablet && <S.BannerInput />}
       </S.BannerContainer>
       <RecommendOrganizations />
