@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import Label from '../../atoms/Label';
 
@@ -70,9 +70,15 @@ export const Container = styled.div`
   padding: 24px 16px;
   transition: background-color 0.3s ease-out;
 
-  :hover {
-    background-color: rgb(${({ theme }) => theme.colors.netural100});
-  }
+  ${(props) =>
+    typeof props.onClick === 'function' &&
+    css`
+      cursor: pointer;
+
+      :hover {
+        background-color: rgb(${({ theme }) => theme.colors.netural100});
+      }
+    `}
 
   > :not(:last-child) {
     margin-bottom: 8px;

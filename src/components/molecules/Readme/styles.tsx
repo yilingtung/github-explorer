@@ -14,4 +14,8 @@ export const Container = styled.div`
     border-radius: ${({ theme }) => theme.borderRadius}px;
     padding: 16px 24px;
   }
+
+  & img {
+    max-width: 100%;
+  }
 `;
