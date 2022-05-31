@@ -41,14 +41,10 @@ export const Sidebar = styled.div`
   }
 `;
 
-export const ErrorBox = styled.div`
-  margin: 0 auto;
-  padding: 40px 0;
-`;
-
 export const Container = styled.div`
   display: flex;
   flex: 1;
+  width: 100%;
 
   @media ${device.tablet} {
     flex-direction: column;

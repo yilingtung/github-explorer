@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
 export const Text = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.subtitle};
-  font-weight: 900;
-  margin-top: 40px;
+  font-size: ${({ theme }) => theme.fontSize.paragraph};
+  margin-top: 20px;
 `;
 
 export const BannerImg = styled.img`
@@ -14,7 +13,9 @@ export const BannerImg = styled.img`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
   align-items: center;
   justify-content: center;
-  padding: 24px 0;
+  padding: 40px 0;
+  width: 100%;
 `;
