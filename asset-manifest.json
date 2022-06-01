@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/github-explorer/static/js/main.99f234c7.js",
+    "main.js": "/github-explorer/static/js/main.48984de0.js",
     "static/js/274.28eec110.chunk.js": "/github-explorer/static/js/274.28eec110.chunk.js",
     "static/js/787.8e84bebf.chunk.js": "/github-explorer/static/js/787.8e84bebf.chunk.js",
     "static/media/not-found.png": "/github-explorer/static/media/not-found.d3fa043a7ebf05e333dc.png",
-    "static/media/banner.png": "/github-explorer/static/media/banner.ca03b0b7e2d39f0df89c.png",
+    "static/media/banner.png": "/github-explorer/static/media/banner.6a98ca216f1c24802a07.png",
     "static/media/error.png": "/github-explorer/static/media/error.b88014bdbfa2e514ddeb.png",
     "static/media/link.svg": "/github-explorer/static/media/link.c3aa363ea7b1696f9ac8246fd6772526.svg",
     "static/media/star.svg": "/github-explorer/static/media/star.4089027bc4af7db9681a0f59476d6bbb.svg",
@@ -15,11 +15,11 @@
     "static/media/check.svg": "/github-explorer/static/media/check.98d556d3a5ee5fb50987d2f1f336bdcf.svg",
     "static/media/arrow-up.svg": "/github-explorer/static/media/arrow-up.ef015f1dcde88f867db380aa0e2313d3.svg",
     "static/media/arrow-down.svg": "/github-explorer/static/media/arrow-down.c8d32c357890d450e3e9b6d74020a9b8.svg",
-    "main.99f234c7.js.map": "/github-explorer/static/js/main.99f234c7.js.map",
+    "main.48984de0.js.map": "/github-explorer/static/js/main.48984de0.js.map",
     "274.28eec110.chunk.js.map": "/github-explorer/static/js/274.28eec110.chunk.js.map",
     "787.8e84bebf.chunk.js.map": "/github-explorer/static/js/787.8e84bebf.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.99f234c7.js"
+    "static/js/main.48984de0.js"
   ]
 }
