@@ -80,10 +80,7 @@ export const organizationSlice = createSlice({
       })
       .addCase(fetchOrgnizationByLoginName.fulfilled, (state, action) => {
         state.singleData.status = 'success';
-        state.dataByLoginName = {
-          ...state.dataByLoginName,
-          [action.payload.loginName]: action.payload.data,
-        };
+        state.dataByLoginName[action.payload.loginName] = action.payload.data;
       })
       .addCase(fetchOrgnizationByLoginName.rejected, (state, action) => {
         state.singleData.status = 'failed';

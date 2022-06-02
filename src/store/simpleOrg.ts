@@ -214,7 +214,7 @@ export const simpleOrgSlice = createSlice({
       })
       .addCase(fetchSimpleRecommendOrgs.pending, (state) => {
         state.recommend.status = 'loading';
-        state.list.error = '';
+        state.recommend.error = '';
       })
       .addCase(fetchSimpleRecommendOrgs.fulfilled, (state, action) => {
         state.recommend.status = 'success';

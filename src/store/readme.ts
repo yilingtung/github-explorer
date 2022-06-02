@@ -71,37 +71,17 @@ export const readmeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchReadme.pending, (state) => {
-        return {
-          ...state,
-          singleData: {
-            ...state.singleData,
-            status: 'loading',
-            error: '',
-          },
-        };
+        state.singleData.status = 'loading';
+        state.singleData.error = '';
       })
       .addCase(fetchReadme.fulfilled, (state, action) => {
-        return {
-          ...state,
-          singleData: {
-            ...state.singleData,
-            status: 'success',
-          },
-          dataByRepoFullName: {
-            ...state.dataByRepoFullName,
-            [action.payload.repoFullName]: action.payload.data,
-          },
-        };
+        state.singleData.status = 'success';
+        state.dataByRepoFullName[action.payload.repoFullName] =
+          action.payload.data;
       })
       .addCase(fetchReadme.rejected, (state, action) => {
-        return {
-          ...state,
-          singleData: {
-            ...state.singleData,
-            status: 'failed',
-            error: action.payload?.message || '',
-          },
-        };
+        state.singleData.status = 'failed';
+        state.singleData.error = action.payload?.message || '';
       });
   },
 });

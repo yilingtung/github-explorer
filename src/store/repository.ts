@@ -211,31 +211,21 @@ export const repositorySlice = createSlice({
         state.list.error = '';
       })
       .addCase(fetchRepositoriesByOrg.fulfilled, (state, action) => {
-        return {
-          ...state,
-          list: {
-            ...state.list,
-            status: 'success',
-          },
-          nameListByParams: {
-            ...state.nameListByParams,
-            [action.payload.params]: {
-              ...state.nameListByParams[action.payload.params],
-              meta: { ...action.payload.nameListData.meta },
-              repoNames:
-                action.payload.nameListData.meta.currentPage === 1
-                  ? action.payload.nameListData.repoNames
-                  : [
-                      ...state.nameListByParams[action.payload.params]
-                        .repoNames,
-                      ...action.payload.nameListData.repoNames,
-                    ],
-            },
-          },
-          dataByRepoFullName: {
-            ...state.dataByRepoFullName,
-            ...action.payload.dataByRepoFullName,
-          },
+        state.list.status = 'success';
+        state.nameListByParams[action.payload.params] = {
+          ...state.nameListByParams[action.payload.params],
+          meta: action.payload.nameListData.meta,
+          repoNames:
+            action.payload.nameListData.meta.currentPage === 1
+              ? action.payload.nameListData.repoNames
+              : [
+                  ...state.nameListByParams[action.payload.params].repoNames,
+                  ...action.payload.nameListData.repoNames,
+                ],
+        };
+        state.dataByRepoFullName = {
+          ...state.dataByRepoFullName,
+          ...action.payload.dataByRepoFullName,
         };
       })
       .addCase(fetchRepositoriesByOrg.rejected, (state, action) => {
@@ -243,37 +233,17 @@ export const repositorySlice = createSlice({
         state.list.error = action.payload?.message || '';
       })
       .addCase(fetchSingleRepo.pending, (state) => {
-        return {
-          ...state,
-          singleData: {
-            ...state.singleData,
-            status: 'loading',
-            error: '',
-          },
-        };
+        state.singleData.status = 'loading';
+        state.singleData.error = '';
       })
       .addCase(fetchSingleRepo.fulfilled, (state, action) => {
-        return {
-          ...state,
-          singleData: {
-            ...state.singleData,
-            status: 'success',
-          },
-          dataByRepoFullName: {
-            ...state.dataByRepoFullName,
-            [action.payload.repoFullName]: action.payload.data,
-          },
-        };
+        state.singleData.status = 'success';
+        state.dataByRepoFullName[action.payload.repoFullName] =
+          action.payload.data;
       })
       .addCase(fetchSingleRepo.rejected, (state, action) => {
-        return {
-          ...state,
-          singleData: {
-            ...state.singleData,
-            status: 'failed',
-            error: action.payload?.message || '',
-          },
-        };
+        state.singleData.status = 'failed';
+        state.singleData.error = action.payload?.message || '';
       });
   },
 });
