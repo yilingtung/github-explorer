@@ -3,8 +3,6 @@ import { device } from '../../../util/media';
 
 import banner from '../../../assets/images/banner.png';
 
-import RecommendOrganizations from '../../organisms/RecommendOrganizations';
-
 import * as S from './styles';
 
 export interface HomePageProps {
@@ -20,7 +18,7 @@ export const HomePage = ({ className }: HomePageProps) => {
         <S.BannerImg src={banner} alt="banner" />
         {!isTablet && <S.BannerInput />}
       </S.BannerContainer>
-      <RecommendOrganizations />
+      <S.RecommendOrganizations />
     </S.Container>
   );
 };

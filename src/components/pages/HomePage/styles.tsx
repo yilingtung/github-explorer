@@ -2,7 +2,12 @@ import styled from 'styled-components';
 
 import { device } from '../../../util/media';
 
-import OrganizationInputSearchStories from '../../organisms/OrganizationInputSearch';
+import OrganizationInputSearchComponent from '../../organisms/OrganizationInputSearch';
+import RecommendOrganizationsComponent from '../../organisms/RecommendOrganizations';
+
+export const RecommendOrganizations = styled(RecommendOrganizationsComponent)`
+  width: 100%;
+`;
 
 export const BannerImg = styled.img`
   width: 100%;
@@ -13,7 +18,7 @@ export const BannerImg = styled.img`
   }
 `;
 
-export const BannerInput = styled(OrganizationInputSearchStories)`
+export const BannerInput = styled(OrganizationInputSearchComponent)`
   width: 100%;
   max-width: 560px;
 `;

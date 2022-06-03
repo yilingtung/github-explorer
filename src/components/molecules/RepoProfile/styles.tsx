@@ -4,8 +4,13 @@ export const TopicGroup = styled.div`
   display: flex;
   flex-wrap: wrap;
 
-  > :not(:last-child) {
-    margin-right: 4px;
+  > * {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    :not(:last-child) {
+      margin-right: 4px;
+    }
   }
 `;
 
