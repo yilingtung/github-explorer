@@ -1,4 +1,4 @@
-import { filterTypes, filterSorts, filterDirections } from '../data/filters';
+import { filterTypes, filterSorts, filterDirections } from '../filters';
 
 /**
  * This function will mapping organization name and filters to a string.

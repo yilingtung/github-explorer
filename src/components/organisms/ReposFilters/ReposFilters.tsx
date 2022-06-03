@@ -4,7 +4,7 @@ import {
   filterTypes,
   filterSorts,
   filterDirections,
-} from '../../../util/data/filters';
+} from '../../../util/filters';
 
 import capitalizeFirstLetter from '../../../util/functions/capitalizeFirstLetter';
 

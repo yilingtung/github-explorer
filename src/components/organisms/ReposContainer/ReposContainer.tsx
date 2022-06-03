@@ -33,7 +33,6 @@ export const ReposContainer = React.memo(
       hasNextPage,
       fetchNextPage,
     } = useRepos({
-      page: 1,
       org: org as string,
       type: filters.type,
       sort: filters.sort,

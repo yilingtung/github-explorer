@@ -2,7 +2,7 @@ import {
   GithubFilterType,
   GithubFilterSort,
   GithubFilterDirection,
-} from '../../../types';
+} from '../../types';
 
 export const filterTypes: GithubFilterType[] = [
   'all',
