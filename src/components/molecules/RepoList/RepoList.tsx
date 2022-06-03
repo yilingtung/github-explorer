@@ -1,5 +1,9 @@
-import React, { useCallback, useRef } from 'react';
-import { VariableSizeList, VariableSizeListProps } from 'react-window';
+import { useCallback, useRef, memo } from 'react';
+import {
+  VariableSizeList,
+  VariableSizeListProps,
+  areEqual,
+} from 'react-window';
 import { ReactWindowScroller } from 'react-window-scroller';
 
 import { CARD_REPO_HEIGHT } from '../../../util/constants';
@@ -22,7 +26,7 @@ export interface RepoListProps {
   onClickRepo?: (repoName: string) => void;
 }
 
-export const RepoList = React.memo(
+export const RepoList = memo(
   ({
     listHeight,
     listWidth,
@@ -77,37 +81,37 @@ export const RepoList = React.memo(
       return itemHeight;
     };
 
-    const renderRepos: VariableSizeListProps['children'] = ({
-      index,
-      style,
-    }) => {
-      const repo: CardRepoProps | undefined =
-        index > itemCount ? undefined : data[index];
+    const renderRepos: VariableSizeListProps['children'] = memo(
+      ({ index, style }) => {
+        const repo: CardRepoProps | undefined =
+          index > itemCount ? undefined : data[index];
 
-      return (
-        <S.ItemWrapper
-          ref={(node) => {
-            if (index === itemCount - 1) {
-              lastElementRef(node);
-            }
-          }}
-          style={style}
-        >
-          {!repo ? (
-            <CardRepoSkeleton />
-          ) : (
-            <CardRepo
-              name={repo.name}
-              description={repo.description}
-              githubUrl={repo.githubUrl}
-              language={repo.language}
-              stars={repo.stars}
-              onClick={() => onClickRepo(repo.name as string)}
-            />
-          )}
-        </S.ItemWrapper>
-      );
-    };
+        return (
+          <S.ItemWrapper
+            ref={(node) => {
+              if (index === itemCount - 1) {
+                lastElementRef(node);
+              }
+            }}
+            style={style}
+          >
+            {!repo ? (
+              <CardRepoSkeleton />
+            ) : (
+              <CardRepo
+                name={repo.name}
+                description={repo.description}
+                githubUrl={repo.githubUrl}
+                language={repo.language}
+                stars={repo.stars}
+                onClick={() => onClickRepo(repo.name as string)}
+              />
+            )}
+          </S.ItemWrapper>
+        );
+      },
+      areEqual
+    );
 
     return (
       <ReactWindowScroller>
