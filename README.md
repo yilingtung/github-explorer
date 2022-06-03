@@ -43,7 +43,7 @@ Only renders a small subset of your rows at any given time, and can dramatically
 
 #### Filtering
 
-Support `type`, `sort`, `direction` to filtering organization's repos. Handle the filtering logic to prevent the same filter request from being triggered twice.
+Support `type`, `sort`, `direction` to filtering organization's repos. Use [react-query](https://react-query.tanstack.com/) as state management and handles caching to prevent query refetching.
 
 <p align="center">
    <img src="/images/filters.gif" width="600" >
@@ -66,15 +66,16 @@ Becouse Github API has [rate limit](https://docs.github.com/en/rest/overview/res
 
 - [React.js](https://reactjs.org/)
 - [styled-components](https://styled-components.com/)
-- [react-redux](https://react-redux.js.org/)
+- [react-query](https://react-query.tanstack.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [react-window](https://github.com/bvaughn/react-window)
 
-## Lint
+## Lint & Test
 
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 - [Husky](https://github.com/typicode/husky)
+- [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/)
 
 ## File Structure
 
@@ -87,25 +88,25 @@ src
 │   └── atoms                       <-- atoms: Input, Button...
 │   │   └── Com1
 │   │       └── index.ts            <-- export component from here
-│   │       └── Com1.tsx            <-- component
-│   │       └── styles.tsx           <-- styled component
+│   │       └── styles.tsx          <-- styled of Com1
+│   │       └── Com1.tsx            <-- Com1 component
+│   │       └── Com1.stories.tsx    <-- the storybook of Com1
+│   │       └── Com1.test.tsx       <-- unit test of Com1
 │   └── molecules                   <-- molecules: CardRepo...
 │   └── organisms                   <-- organisms: Header... might has some api logic
 │   └── layouts                     <-- sharing layouts
 │   └── pages                       <-- combine components, implement app business logic
 ├── App.tsx                         <-- app routes
-├── store                           <-- redux store
-│   └── index.ts
-│   └── reducer1
-│   └── reducer2
-├── styles                           <-- styles
+├── styles                          <-- styles
 │   └── globalStyles.ts
 │   └── theme.ts
 └── utis
-    └── constants                   <-- endpoints, layout sizes
+    └── api                         <-- api functions
+    └── constants                   <-- endpoints, layout constants
     └── functions                   <-- helper functions
-    └── hooks                       <-- hooks
+    └── hooks                       <-- custom hooks
     └── maps                        <-- errorMap, languageColorsMap
+    └── queryKeys                   <-- query keys for manage query caching
 types                               <-- interface, type
 
 ```
