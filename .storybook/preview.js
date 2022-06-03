@@ -3,7 +3,7 @@ import { Normalize } from 'styled-normalize';
 import { ThemeProvider } from 'styled-components';
 
 import theme from '../src/styles/theme';
-import '../src/index.css';
+import GlobalStyle from '../src/styles/globalsStyles';
 
 addDecorator((storyFn) => (
   <ThemeProvider theme={theme}>{storyFn()}</ThemeProvider>
@@ -23,6 +23,7 @@ export const decorators = [
   (Story) => (
     <>
       <Normalize />
+      <GlobalStyle />
       <Story />
     </>
   ),
