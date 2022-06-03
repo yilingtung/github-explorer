@@ -1,17 +1,27 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Provider } from 'react-redux';
 import { withRouter } from 'storybook-addon-react-router-v6';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import ReposContainer from '.';
 
-import { store } from '../../../store';
+const mockedQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 export default {
   title: 'organisms/ReposContainer',
   component: ReposContainer,
   decorators: [
     withRouter,
-    (story) => <Provider store={store}>{story()}</Provider>,
+    (story) => (
+      <QueryClientProvider client={mockedQueryClient}>
+        {story()}
+      </QueryClientProvider>
+    ),
   ],
   parameters: {
     reactRouter: {

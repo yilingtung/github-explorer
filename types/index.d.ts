@@ -1,8 +1,11 @@
-export type FetchStatus = 'idle' | 'loading' | 'success' | 'failed';
-
 export type ResponseData<Data> = Data & {
   status: number;
   message?: string;
+};
+
+export type WithPagination = {
+  page: number;
+  per_page: number;
 };
 
 export interface GithubOrgData {

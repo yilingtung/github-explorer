@@ -1,14 +1,8 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {
-  fetchSimpleOrgsByQuery,
-  resetsimpleOrgList,
-  selectSimpleOrg,
-} from '../../../store/simpleOrg';
-import useAppSelector from '../../../util/hooks/useAppSelector';
-import useAppDispatch from '../../../util/hooks/useAppDispatch';
 import useDebounce from '../../../util/hooks/useDebounce';
+import useSimpleOrganizations from '../../../util/hooks/useSimpleOrganizations';
 
 import InputSearch from '../../molecules/InputSearch';
 import SelectList from '../../atoms/SelectList';
@@ -32,28 +26,13 @@ export const OrganizationInputSearch = ({
   const debounceInputValue = useDebounce(inputValue, INPUT_DEBOUNCE);
 
   const {
-    list: { status, error, nameList },
-    dataByName,
-  } = useAppSelector(selectSimpleOrg);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    let promise: any = null;
-
-    if (debounceInputValue === '') {
-      dispatch(resetsimpleOrgList());
-      return;
-    }
-
-    promise = dispatch(
-      fetchSimpleOrgsByQuery({ query: debounceInputValue, per_page: 5 })
-    );
-
-    return () => {
-      promise?.abort();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounceInputValue]);
+    status: fetchSimpleOrganizationsStatus,
+    data: simpleOrganizationsData,
+    error: fetchSimpleOrganizationsError,
+  } = useSimpleOrganizations(
+    { name: debounceInputValue as string },
+    { enabled: !!debounceInputValue, staleTime: Infinity }
+  );
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,69 +72,61 @@ export const OrganizationInputSearch = ({
     [navigateToOrganization]
   );
 
-  const renderSuggestions = useCallback(
-    ({
-      setSuggestionOpen,
-    }: {
-      setSuggestionOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    }) => {
-      if (debounceInputValue === '') return undefined;
+  const renderSuggestions = ({
+    setSuggestionOpen,
+  }: {
+    setSuggestionOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  }) => {
+    if (debounceInputValue === '' || inputValue === '') return undefined;
 
-      if (status === 'loading') {
-        return (
-          <SelectList>
-            <SelectOption>
-              <HintText>Loading...</HintText>
-            </SelectOption>
-          </SelectList>
-        );
-      }
-
-      if (status === 'failed') {
-        return (
-          <SelectList>
-            <SelectOption>
-              <HintText>{error}</HintText>
-            </SelectOption>
-          </SelectList>
-        );
-      }
-
-      if (nameList.length <= 0) {
-        return (
-          <SelectList>
-            <SelectOption>
-              <HintText>Empty result.</HintText>
-            </SelectOption>
-          </SelectList>
-        );
-      }
-
+    if (fetchSimpleOrganizationsStatus === 'loading') {
       return (
         <SelectList>
-          {nameList.map((name) => (
-            <S.ItemContainer
-              key={name}
-              onClick={() => handleSelectOption(name, setSuggestionOpen)}
-              role="button"
-              tabIndex={0}
-            >
-              <S.Thumbnail thumbnail={dataByName[name].avatar_url} />
-              <S.Name>{name}</S.Name>
-            </S.ItemContainer>
-          ))}
+          <SelectOption>
+            <HintText>Loading...</HintText>
+          </SelectOption>
         </SelectList>
       );
-    },
-    [
-      status,
-      error,
-      nameList,
-      dataByName,
-      debounceInputValue,
-      handleSelectOption,
-    ]
-  );
+    }
+
+    if (fetchSimpleOrganizationsStatus === 'error') {
+      return (
+        <SelectList>
+          <SelectOption>
+            <HintText>{fetchSimpleOrganizationsError.message}</HintText>
+          </SelectOption>
+        </SelectList>
+      );
+    }
+
+    if (simpleOrganizationsData && simpleOrganizationsData.length <= 0) {
+      return (
+        <SelectList>
+          <SelectOption>
+            <HintText>Empty result.</HintText>
+          </SelectOption>
+        </SelectList>
+      );
+    }
+
+    return (
+      <SelectList>
+        {simpleOrganizationsData?.map((simpleOrganization) => (
+          <S.ItemContainer
+            key={simpleOrganization.id}
+            onClick={() =>
+              handleSelectOption(simpleOrganization.login, setSuggestionOpen)
+            }
+            role="button"
+            tabIndex={0}
+          >
+            <S.Thumbnail thumbnail={simpleOrganization.avatar_url} />
+            <S.Name>{simpleOrganization.login}</S.Name>
+          </S.ItemContainer>
+        ))}
+      </SelectList>
+    );
+  };
 
   return (
     <InputSearch

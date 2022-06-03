@@ -1,17 +1,27 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { withRouter } from 'storybook-addon-react-router-v6';
-import { Provider } from 'react-redux';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-import Header from './';
+import Header from '.';
 
-import { store } from '../../../store';
+const mockedQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 export default {
   title: 'organisms/Header',
   component: Header,
   decorators: [
     withRouter,
-    (story) => <Provider store={store}>{story()}</Provider>,
+    (story) => (
+      <QueryClientProvider client={mockedQueryClient}>
+        {story()}
+      </QueryClientProvider>
+    ),
   ],
   parameters: {
     reactRouter: {

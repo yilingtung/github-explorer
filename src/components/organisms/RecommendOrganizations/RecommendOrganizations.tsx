@@ -1,12 +1,7 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import {
-  fetchSimpleRecommendOrgs,
-  selectSimpleOrg,
-} from '../../../store/simpleOrg';
-import useAppDispatch from '../../../util/hooks/useAppDispatch';
-import useAppSelector from '../../../util/hooks/useAppSelector';
+import useRecommendSimpleOrganizations from '../../../util/hooks/useRecommendSimpleOrganizations';
 import CardOrganization, {
   CardOrganizationSkeleton,
 } from '../../molecules/CardOrganization';
@@ -15,45 +10,35 @@ import * as S from './styles';
 
 const CardGroup = () => {
   const {
-    recommend: { status, error, nameList },
-    dataByName,
-  } = useAppSelector(selectSimpleOrg);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchSimpleRecommendOrgs());
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
-
-  const recommendData = useMemo(() => {
-    return nameList.filter((orgName) => dataByName[orgName]);
-  }, [nameList, dataByName]);
+    status: fetchRecommendOrgsStatus,
+    data: recommendOrgsData,
+    error: fetchRecommendOrgsError,
+  } = useRecommendSimpleOrganizations(
+    { nameList: ['vercel', 'figma', 'mswjs', 'facebook', 'Dcard', 'strapi'] },
+    { staleTime: Infinity }
+  );
 
   return (
     <S.CardGroup>
-      {status == 'idle' || status === 'loading' ? (
+      {fetchRecommendOrgsStatus == 'idle' ||
+      fetchRecommendOrgsStatus === 'loading' ? (
         <>
           {new Array(6).fill(0).map((_, index) => (
             <CardOrganizationSkeleton key={index} />
           ))}
         </>
-      ) : status === 'failed' ? (
-        error
+      ) : fetchRecommendOrgsStatus === 'error' ? (
+        fetchRecommendOrgsError.message
       ) : (
-        <>
-          {recommendData.map((orgName) => (
-            <Link key={orgName} to={`/${dataByName[orgName].login}`}>
-              <CardOrganization
-                key={dataByName[orgName].id}
-                name={orgName}
-                thumbnail={dataByName[orgName].avatar_url}
-              />
-            </Link>
-          ))}
-        </>
+        recommendOrgsData?.map((orgData) => (
+          <Link key={orgData.id} to={`/${orgData.login}`}>
+            <CardOrganization
+              key={orgData.id}
+              name={orgData.login}
+              thumbnail={orgData.avatar_url}
+            />
+          </Link>
+        ))
       )}
     </S.CardGroup>
   );

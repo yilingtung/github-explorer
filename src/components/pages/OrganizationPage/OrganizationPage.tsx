@@ -1,14 +1,8 @@
-import { useEffect, useMemo, lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { GithubOrgData } from '../../../../types';
 
-import {
-  fetchOrgnizationByLoginName,
-  selectOrganization,
-} from '../../../store/organization';
-import useAppDispatch from '../../../util/hooks/useAppDispatch';
-import useAppSelector from '../../../util/hooks/useAppSelector';
 import useElementOnScreen from '../../../util/hooks/useElementOnScreen';
+import useOrganization from '../../../util/hooks/useOrganization';
 
 import ScrollTopButton from '../../atoms/ScrollTopButton';
 import CardError from '../../molecules/CardError';
@@ -21,35 +15,13 @@ const RepoPage = lazy(() => import('../RepoPage'));
 
 import * as S from './styles';
 
-export interface HasOrganizationProps {
-  orgData?: GithubOrgData;
-}
-
-const HasOrganization = ({ orgData }: HasOrganizationProps) => {
+const MainContent = () => {
   const [filterRef, isFilterVisible] = useElementOnScreen<HTMLDivElement>({
     rootMargin: '100px',
   });
-  const {
-    singleData: { status: fetchOrgStatus },
-  } = useAppSelector(selectOrganization);
 
   return (
     <>
-      <S.Sidebar>
-        <S.StickyProfile>
-          {fetchOrgStatus === 'loading' || !orgData ? (
-            <OrgProfileSkeleton />
-          ) : (
-            <OrgProfile
-              name={orgData.name}
-              description={orgData.description}
-              avtar={orgData.avatar_url}
-              githubUrl={orgData.html_url}
-              blogUrl={orgData.blog}
-            />
-          )}
-        </S.StickyProfile>
-      </S.Sidebar>
       <S.Main>
         <ReposFilters ref={filterRef} />
         <ReposContainer />
@@ -69,35 +41,46 @@ export const OrganizationPage = ({ className }: OrganizationPageProps) => {
   const navigate = useNavigate();
 
   const {
-    dataByLoginName,
-    singleData: { status: fetchOrgStatus, error: fetchOrgError },
-  } = useAppSelector(selectOrganization);
-  const dispatch = useAppDispatch();
-
-  const orgData = useMemo(() => {
-    if (!org) return undefined;
-    return dataByLoginName[org];
-  }, [org, dataByLoginName]);
-
-  useEffect(() => {
-    if (!org || orgData) return;
-    dispatch(fetchOrgnizationByLoginName({ loginName: org }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [org, orgData]);
+    status: fetchOrgStatus,
+    data: orgData,
+    error: fetchOrgError,
+  } = useOrganization(
+    { name: org as string },
+    {
+      staleTime: Infinity,
+    }
+  );
 
   return (
     <S.Container className={className}>
-      {fetchOrgStatus === 'failed' ? (
+      {fetchOrgStatus === 'error' ? (
         <CardError
-          type={fetchOrgError === 'Not Found' ? 'notFound' : 'error'}
+          type={fetchOrgError.message === 'Not Found' ? 'notFound' : 'error'}
           message={
-            fetchOrgError === 'Not Found'
+            fetchOrgError.message === 'Not Found'
               ? `'${org}' not found.`
-              : fetchOrgError
+              : fetchOrgError.message
           }
         />
       ) : (
-        <HasOrganization orgData={orgData} />
+        <>
+          <S.Sidebar>
+            <S.StickyProfile>
+              {fetchOrgStatus === 'loading' || !orgData ? (
+                <OrgProfileSkeleton />
+              ) : (
+                <OrgProfile
+                  name={orgData.name}
+                  description={orgData.description}
+                  avtar={orgData.avatar_url}
+                  githubUrl={orgData.html_url}
+                  blogUrl={orgData.blog}
+                />
+              )}
+            </S.StickyProfile>
+          </S.Sidebar>
+          <MainContent />
+        </>
       )}
       {(location?.state as { modal?: boolean })?.modal && (
         <Suspense>

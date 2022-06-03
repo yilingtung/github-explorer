@@ -1,23 +1,24 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { Normalize } from 'styled-normalize';
 import { ThemeProvider } from 'styled-components';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
-import { store } from './store';
 import theme from './styles/theme';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import GlobalStyle from './styles/globalsStyles';
 
+const queryClient = new QueryClient();
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
       <Normalize />
       <ThemeProvider theme={theme}>
         <GlobalStyle />
@@ -25,7 +26,8 @@ root.render(
           <App />
         </BrowserRouter>
       </ThemeProvider>
-    </Provider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
