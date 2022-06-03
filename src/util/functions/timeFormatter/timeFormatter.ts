@@ -1,4 +1,8 @@
 const timeFormatter = (timeString: string) => {
+  if (isNaN(Date.parse(timeString))) {
+    return '';
+  }
+
   const d = new Date(timeString);
 
   return (

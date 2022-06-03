@@ -14,9 +14,19 @@ export const Input = React.memo(
     ({ className, value, onChange, onClearValue, ...props }, ref) => {
       return (
         <S.Container className={className}>
-          <S.Input ref={ref} value={value} onChange={onChange} {...props} />
+          <S.Input
+            ref={ref}
+            value={value}
+            onChange={onChange}
+            aria-label="input"
+            {...props}
+          />
           {value && (
-            <S.CloseBtn onClick={onClearValue} type="button">
+            <S.CloseBtn
+              onClick={onClearValue}
+              type="button"
+              data-testid="clear-btn"
+            >
               <CloseSvg />
             </S.CloseBtn>
           )}
