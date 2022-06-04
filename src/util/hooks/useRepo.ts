@@ -15,7 +15,7 @@ const useRepo = (
   return useQuery<GithubRepository, Error, GithubRepository>(
     reposKeys.detail({ org, repoName }),
     () => getRepo(params),
-    options
+    { retry: false, refetchOnWindowFocus: false, ...options }
   );
 };
 

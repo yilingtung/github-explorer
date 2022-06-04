@@ -53,6 +53,8 @@ const useRepos = (
           : undefined;
       },
       staleTime: Infinity,
+      retry: false,
+      refetchOnWindowFocus: false,
     }
   );
 };

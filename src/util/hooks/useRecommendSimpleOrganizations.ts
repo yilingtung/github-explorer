@@ -15,7 +15,7 @@ const useRecommendSimpleOrganizations = (
   return useQuery<SimpleGithubOrgData[], Error, SimpleGithubOrgData[]>(
     simpleOrganizationsKeys.recommendList(nameList),
     () => getRecommendSimpleOrganization(params),
-    options
+    { retry: false, refetchOnWindowFocus: false, ...options }
   );
 };
 

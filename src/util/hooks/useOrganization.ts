@@ -15,7 +15,7 @@ const useOrganization = (
   return useQuery<GithubOrgData, Error, GithubOrgData>(
     organizationsKeys.detail(name),
     () => getOrganization(params),
-    options
+    { retry: false, refetchOnWindowFocus: false, ...options }
   );
 };
 

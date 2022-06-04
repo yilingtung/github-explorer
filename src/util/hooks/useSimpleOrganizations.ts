@@ -15,7 +15,11 @@ const useSimpleOrganizations = (
   return useQuery<SimpleGithubOrgData[], Error, SimpleGithubOrgData[]>(
     simpleOrganizationsKeys.list(name),
     () => getSimpleOrganizations(params),
-    options
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+      ...options,
+    }
   );
 };
 
