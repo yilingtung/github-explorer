@@ -7,6 +7,7 @@ export const Container = styled.div`
   color: rgb(${({ theme }) => theme.colors.netural600});
   background-color: rgba(${({ theme }) => theme.colors.netural200}, 0.7);
   border-radius: ${({ theme }) => theme.borderRadius}px;
+  overflow: auto;
 
   & pre {
     overflow-y: auto;
