@@ -1,8 +1,10 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import useElementOnScreen from '../../../util/hooks/useElementOnScreen';
 import useOrganization from '../../../util/hooks/useOrganization';
+import useMediaQuery from '../../../util/hooks/useMediaQuery';
+import { device } from '../../../util/media';
 
 import ScrollTopButton from '../../atoms/ScrollTopButton';
 import CardError from '../../molecules/CardError';
@@ -10,21 +12,37 @@ import OrgProfile, { OrgProfileSkeleton } from '../../molecules/OrgProfile';
 import ReposContainer from '../../organisms/ReposContainer';
 import ReposFilters from '../../organisms/ReposFilters';
 
+import { ReactComponent as GridSvg } from '../../../assets/icons/grid.svg';
+import { ReactComponent as RowsSvg } from '../../../assets/icons/rows.svg';
+
 const Modal = lazy(() => import('../../atoms/Modal'));
 const RepoPage = lazy(() => import('../RepoPage'));
 
 import * as S from './styles';
 
 const MainContent = () => {
+  const [isGrid, setGrid] = useState(false);
+  const isTablet = useMediaQuery(device.tablet);
   const [filterRef, isFilterVisible] = useElementOnScreen<HTMLDivElement>({
     rootMargin: '100px',
   });
 
+  const handleToggleGrid = () => {
+    setGrid((state) => !state);
+  };
+
   return (
     <>
       <S.Main>
-        <ReposFilters ref={filterRef} />
-        <ReposContainer />
+        <S.FiltersContainer>
+          <ReposFilters ref={filterRef} />
+          {!isTablet && (
+            <S.DisplayButton onClick={handleToggleGrid}>
+              {isGrid ? <GridSvg /> : <RowsSvg />}
+            </S.DisplayButton>
+          )}
+        </S.FiltersContainer>
+        <ReposContainer isGrid={isTablet ? false : isGrid} />
       </S.Main>
       {!isFilterVisible && <ScrollTopButton />}
     </>
@@ -89,7 +107,7 @@ export const OrganizationPage = ({ className }: OrganizationPageProps) => {
               navigate(-1);
             }}
           >
-            <RepoPage repoName={location.pathname.split('/')[2]} />
+            <RepoPage isInModal repoName={location.pathname.split('/')[2]} />
           </Modal>
         </Suspense>
       )}

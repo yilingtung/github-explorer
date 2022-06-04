@@ -1,16 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
+import timeFormatter from '../../../util/functions/timeFormatter';
 
 import Label from '../../atoms/Label';
+import Tag from '../../atoms/Tag';
+import HintText from '../../atoms/HintText';
 import Skeleton from '../../atoms/Skeleton';
+import LanguageTag from '../../molecules/LanguageTag';
 
 import { ReactComponent as GithubSvg } from '../../../assets/icons/github.svg';
 import { ReactComponent as StarSvg } from '../../../assets/icons/star.svg';
 
 import * as S from './styles';
-import Tag from '../../atoms/Tag';
-import LanguageTag from '../LanguageTag';
-import timeFormatter from '../../../util/functions/timeFormatter';
-import HintText from '../../atoms/HintText';
 
 export interface RepoProfileProps {
   className?: string;
@@ -22,6 +24,7 @@ export interface RepoProfileProps {
   stars: number;
   updatedAt: string;
   topics: string[];
+  isInModal?: boolean;
 }
 
 export const RepoProfile = React.memo(
@@ -35,11 +38,16 @@ export const RepoProfile = React.memo(
     stars,
     updatedAt,
     topics = [],
+    isInModal,
   }: RepoProfileProps) => {
     return (
       <S.Container className={className}>
         <S.Title>
-          <span>{org}</span>
+          {isInModal ? (
+            <span>{org}</span>
+          ) : (
+            <Link to={{ pathname: `/${org}` }}>{org}</Link>
+          )}
           <span>/</span>
           <span>{repo}</span>
         </S.Title>

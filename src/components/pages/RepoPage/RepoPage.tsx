@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react';
 import { useParams } from 'react-router-dom';
 
 import useReadme from '../../../util/hooks/useReadme';
@@ -5,21 +6,24 @@ import useRepo from '../../../util/hooks/useRepo';
 
 import CardError from '../../molecules/CardError';
 import RepoProfile, { RepoProfileSkeleton } from '../../molecules/RepoProfile';
-import Readme from '../../molecules/Readme';
+
+const Readme = lazy(() => import('../../molecules/Readme'));
 
 import * as S from './styles';
 
 export interface RepoPageProps {
   className?: string;
+  isInModal?: boolean;
   repoName?: string;
 }
 
 export const RepoPage = ({
   className,
+  isInModal,
   repoName: repoNameFromProps,
 }: RepoPageProps) => {
   const { org, repo: repoFromParams } = useParams();
-  const repo = repoFromParams || repoNameFromProps;
+  const repo = isInModal ? repoNameFromProps : repoFromParams;
 
   const {
     status: fetchRepoStatus,
@@ -52,8 +56,13 @@ export const RepoPage = ({
             stars={repoData.stargazers_count}
             updatedAt={repoData.updated_at}
             topics={repoData.topics}
+            isInModal={isInModal}
           />
-          {readmeData && <Readme content={readmeData} />}
+          {readmeData && (
+            <Suspense fallback={<div>Loading...</div>}>
+              <Readme content={readmeData} />
+            </Suspense>
+          )}
         </>
       ) : (
         <>

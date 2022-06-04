@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
+
 import {
   filterTypes,
   filterSorts,
   filterDirections,
 } from '../../../util/filters';
-
 import capitalizeFirstLetter from '../../../util/functions/capitalizeFirstLetter';
 
 import Dropdown from '../../molecules/Dropdown';

@@ -4,7 +4,6 @@ import { device } from '../../../util/media';
 
 export const Container = styled.div`
   display: flex;
-  justify-content: flex-end;
 
   @media ${device.tablet} {
     flex-direction: column;

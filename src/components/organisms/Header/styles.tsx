@@ -26,6 +26,10 @@ export const Wrapper = styled.div`
   > :not(:last-child) {
     margin-right: 16px;
   }
+
+  > a {
+    text-decoration: none;
+  }
 `;
 
 export const Container = styled.header`

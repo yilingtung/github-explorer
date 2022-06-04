@@ -1,10 +1,12 @@
 import React, { useCallback, useMemo } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import AutoSizer from 'react-virtualized-auto-sizer';
 
 import getValidRepoFilters from '../../../util/functions/getValidRepoFilters';
 import useRepos from '../../../util/hooks/useRepos';
 
 import RepoList from '../../molecules/RepoList';
+import RepoListGrid from '../../molecules/RepoListGrid';
 import HintText from '../../atoms/HintText';
 import Button from '../../atoms/Button';
 
@@ -12,10 +14,11 @@ import * as S from './styles';
 
 export interface ReposContainerProps {
   className?: string;
+  isGrid?: boolean;
 }
 
 export const ReposContainer = React.memo(
-  ({ className }: ReposContainerProps) => {
+  ({ className, isGrid = false }: ReposContainerProps) => {
     const { org } = useParams();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
@@ -78,18 +81,37 @@ export const ReposContainer = React.memo(
 
     return (
       <S.Container className={className}>
-        <RepoList
-          listHeight={window.innerHeight}
-          listWidth={600}
-          data={formattedRepos || []}
-          disableFetchMore={fetchReposStatus === 'error'}
-          hasNextPage={hasNextPage}
-          isFetchingNextPage={isFetchingNextPage}
-          fetchNextPage={() => {
-            fetchNextPage();
-          }}
-          onClickRepo={handleClickRepo}
-        />
+        <AutoSizer disableHeight style={{ width: '100%' }}>
+          {({ width }) =>
+            isGrid ? (
+              <RepoListGrid
+                listHeight={window.innerHeight}
+                listWidth={width}
+                data={formattedRepos || []}
+                disableFetchMore={fetchReposStatus === 'error'}
+                hasNextPage={hasNextPage}
+                isFetchingNextPage={isFetchingNextPage}
+                fetchNextPage={() => {
+                  fetchNextPage();
+                }}
+                onClickRepo={handleClickRepo}
+              />
+            ) : (
+              <RepoList
+                listHeight={window.innerHeight}
+                listWidth={600}
+                data={formattedRepos || []}
+                disableFetchMore={fetchReposStatus === 'error'}
+                hasNextPage={hasNextPage}
+                isFetchingNextPage={isFetchingNextPage}
+                fetchNextPage={() => {
+                  fetchNextPage();
+                }}
+                onClickRepo={handleClickRepo}
+              />
+            )
+          }
+        </AutoSizer>
         {fetchReposStatus === 'error' && (
           <S.ListFooter>
             <Button

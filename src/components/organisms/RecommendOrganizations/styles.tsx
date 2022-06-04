@@ -13,6 +13,7 @@ export const CardGroup = styled.div`
   flex-wrap: wrap;
 
   > * {
+    text-decoration: none;
     width: 33%;
 
     @media ${device.tablet} {
