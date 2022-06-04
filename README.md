@@ -11,21 +11,54 @@
   <br>
 </p>
 
+## Intro
+
+This project was bootstrapped with Create React App and TypeScript template.<br>
+Using long list virtualization, lazy load and caching to improve application performance.
+
 ## Demo
 
-[https://yilingtung.github.io/github-explorer/](https://yilingtung.github.io/github-explorer/)
+You counld try the real app on github page. 👉🏻 [https://yilingtung.github.io/github-explorer/](https://yilingtung.github.io/github-explorer/)
 <br>
 
 <p align="center">
    <img src="/images/demo.gif" width="600" >
 </p><br><br>
 
-## Features
+## Overview 📖
 
-- Long list virtualization.
-- Lazy load data & infinite scroll.
-- Filtering.
-- Route as modal.
+1. [**How To Use**](https://github.com/yilingtung/github-explorer#how-to-use)
+   - [With Storybook](https://github.com/yilingtung/github-explorer#with-storybook)
+2. [**Features**](https://github.com/yilingtung/github-explorer#features)
+   - [Long List Virtualization](https://github.com/yilingtung/github-explorer#long-list-virtualization)
+   - [Lazy Load & Infinite Scroll](https://github.com/yilingtung/github-explorer#lazy-load--infinite-scroll)
+   - [Filtering & Caching](https://github.com/yilingtung/github-explorer#filtering--caching)
+   - [Toggle List Arrangement](https://github.com/yilingtung/github-explorer#toggle-list-arrangement)
+   - [Route as Modal](https://github.com/yilingtung/github-explorer#route-as-modal)
+3. [**File Structure**](https://github.com/yilingtung/github-explorer#file-structure)
+4. [**Build With**](https://github.com/yilingtung/github-explorer#build-with)
+5. [**Code Quality & Test**](https://github.com/yilingtung/github-explorer#code-quality--test)
+6. [**Reference**](https://github.com/yilingtung/github-explorer#reference)
+
+## How To Use
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+```
+$ yarn && yarn start
+```
+
+#### With Storybook
+
+After clone the project and install all dependencies.
+You can run the script below and open [http://localhost:6006](http://localhost:6006) to view UI components in the Storybook.
+
+```
+$ yarn storybook
+```
+
+## Features
 
 #### Long List Virtualization
 
@@ -35,18 +68,26 @@ Only renders a small subset of your rows at any given time, and can dramatically
    <img src="/images/windowing.gif" width="600" >
 </p><br><br>
 
-#### Lazy load data & infinite scroll
+#### Lazy Load & Infinite Scroll
 
 <p align="center">
    <img src="/images/infinite-scroll.gif" width="600" >
 </p><br><br>
 
-#### Filtering
+#### Filtering & Caching
 
 Support `type`, `sort`, `direction` to filtering organization's repos. Use [react-query](https://react-query.tanstack.com/) as state management and handles caching to prevent query refetching.
 
 <p align="center">
    <img src="/images/filters.gif" width="600" >
+</p><br><br>
+
+#### Toggle List Arrangement
+
+Support two way to display the list of repositories: "Row" and "Grid".
+
+<p align="center">
+   <img src="/images/list-display.gif" width="600" >
 </p><br><br>
 
 #### Route as Modal
@@ -61,21 +102,6 @@ On many popular social media, opening a post will update the URL but won't trigg
 #### API Rate Limit
 
 Becouse Github API has [rate limit](https://docs.github.com/en/rest/overview/resources-in-the-rest-api) . Unauthenticated requests allows up to 10 requests per minute. That is why you may find infinite scroll becomes a button trigger sometimes.
-
-## Built With
-
-- [React.js](https://reactjs.org/)
-- [styled-components](https://styled-components.com/)
-- [react-query](https://react-query.tanstack.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [react-window](https://github.com/bvaughn/react-window)
-
-## Lint & Test
-
-- [ESLint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
-- [Husky](https://github.com/typicode/husky)
-- [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/)
 
 ## File Structure
 
@@ -111,44 +137,23 @@ types                               <-- interface, type
 
 ```
 
+## Build With
+
+- [React.js](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [styled-components](https://styled-components.com/)
+- [react-window](https://github.com/bvaughn/react-window)
+- [react-query](https://react-query.tanstack.com/)
+
+## Code Quality & Test
+
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [Husky](https://github.com/typicode/husky)
+- [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/)
+
 ## Reference
 
 - [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/)
 - [Long list windowing](https://zh-hant.reactjs.org/docs/optimizing-performance.html#virtualize-long-lists)
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- [angular commit message format](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit)
