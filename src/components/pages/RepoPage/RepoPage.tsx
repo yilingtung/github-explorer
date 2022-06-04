@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import useReadme from '../../../util/hooks/useReadme';
 import useRepo from '../../../util/hooks/useRepo';
 
+import Box from '../../atoms/Box';
+import Loading from '../../atoms/Loading';
 import CardError from '../../molecules/CardError';
 import RepoProfile, { RepoProfileSkeleton } from '../../molecules/RepoProfile';
 
@@ -59,7 +61,13 @@ export const RepoPage = ({
             isInModal={isInModal}
           />
           {readmeData && (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <Box>
+                  <Loading />
+                </Box>
+              }
+            >
               <Readme content={readmeData} />
             </Suspense>
           )}
