@@ -1,11 +1,25 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
-import ScrollToTop from './components/atoms/ScrollToTop';
 import SiteLayout from './components/layouts/SiteLayout';
-import HomePage from './components/pages/HomePage';
-import OrganizationPage from './components/pages/OrganizationPage';
-import RepoPage from './components/pages/RepoPage';
+import ScrollToTop from './components/atoms/ScrollToTop';
+import Box from './components/atoms/Box';
+import Loading from './components/atoms/Loading';
+
+const HomePage = lazy(
+  () => import(/* webpackChunkName: "home" */ './components/pages/HomePage')
+);
+
+const OrganizationPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "organization" */ './components/pages/OrganizationPage'
+    )
+);
+
+const RepoPage = lazy(
+  () => import(/* webpackChunkName: "repo" */ './components/pages/RepoPage')
+);
 
 function App() {
   const location = useLocation();
@@ -25,15 +39,23 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <Routes location={isModal ? previousLocation : location}>
-        <Route path="/" element={<SiteLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path=":org">
-            <Route index element={<OrganizationPage />} />
-            <Route path=":repo" element={<RepoPage />} />
+      <Suspense
+        fallback={
+          <Box>
+            <Loading />
+          </Box>
+        }
+      >
+        <Routes location={isModal ? previousLocation : location}>
+          <Route path="/" element={<SiteLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path=":org">
+              <Route index element={<OrganizationPage />} />
+              <Route path=":repo" element={<RepoPage />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </Suspense>
     </>
   );
 }
