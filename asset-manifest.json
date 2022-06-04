@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/github-explorer/static/js/main.734e8115.js",
+    "main.js": "/github-explorer/static/js/main.ce934ab7.js",
     "static/js/787.8e84bebf.chunk.js": "/github-explorer/static/js/787.8e84bebf.chunk.js",
     "index.html": "/github-explorer/index.html",
-    "main.734e8115.js.map": "/github-explorer/static/js/main.734e8115.js.map",
+    "main.ce934ab7.js.map": "/github-explorer/static/js/main.ce934ab7.js.map",
     "787.8e84bebf.chunk.js.map": "/github-explorer/static/js/787.8e84bebf.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.734e8115.js"
+    "static/js/main.ce934ab7.js"
   ]
 }
