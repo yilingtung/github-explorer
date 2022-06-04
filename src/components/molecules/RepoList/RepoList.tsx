@@ -7,6 +7,8 @@ import {
 import { ReactWindowScroller } from 'react-window-scroller';
 
 import { CARD_REPO_HEIGHT } from '../../../util/constants';
+import useMediaQuery from '../../../util/hooks/useMediaQuery';
+import { device } from '../../../util/media';
 
 import CardRepo, {
   CardRepoSkeleton,
@@ -47,6 +49,7 @@ export const RepoList = memo(
       (hasNextPage && !disableFetchMore) || isInitialLoading
         ? itemCount + skeletonCountInScreen
         : itemCount;
+    const isTablet = useMediaQuery(device.tablet);
 
     // handle infinite scroll
     const observer = useRef<IntersectionObserver | null>(null);
@@ -114,7 +117,7 @@ export const RepoList = memo(
     );
 
     return (
-      <ReactWindowScroller>
+      <ReactWindowScroller throttleTime={isTablet ? 300 : undefined}>
         {({ ref, outerRef, style, onScroll }) => (
           <VariableSizeList
             ref={ref}
