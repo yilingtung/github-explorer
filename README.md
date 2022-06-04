@@ -131,7 +131,7 @@ src
     └── constants                   <-- endpoints, layout constants
     └── functions                   <-- helper functions
     └── hooks                       <-- custom hooks
-    └── maps                        <-- errorMap, languageColorsMap
+    └── maps                        <-- languageColorsMap
     └── queryKeys                   <-- query keys for manage query caching
 types                               <-- interface, type
 
