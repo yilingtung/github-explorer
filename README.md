@@ -14,16 +14,16 @@
 ## Intro
 
 This project was bootstrapped with Create React App and TypeScript template.<br>
-Using long list virtualization, lazy load and caching to improve application performance.
+Using route based splitting, long list virtualization, data lazy loading, caching to improve application performance.
 
 ## Demo
 
 You counld try the real app on github page. 👉🏻 [https://yilingtung.github.io/github-explorer/](https://yilingtung.github.io/github-explorer/)
 <br>
 
-<p align="center">
+<p align="start">
    <img src="/images/demo.gif" width="600" >
-</p><br><br>
+</p>
 
 ## Overview 📖
 
@@ -31,13 +31,14 @@ You counld try the real app on github page. 👉🏻 [https://yilingtung.github.
    - [With Storybook](https://github.com/yilingtung/github-explorer#with-storybook)
 2. [**Features**](https://github.com/yilingtung/github-explorer#features)
    - [Long List Virtualization](https://github.com/yilingtung/github-explorer#long-list-virtualization)
-   - [Lazy Load & Infinite Scroll](https://github.com/yilingtung/github-explorer#lazy-load--infinite-scroll)
-   - [Filtering & Caching](https://github.com/yilingtung/github-explorer#filtering--caching)
-   - [Toggle List Arrangement](https://github.com/yilingtung/github-explorer#toggle-list-arrangement)
+   - [Lazy Load Data & Infinite Scroll](https://github.com/yilingtung/github-explorer#lazy-load-data--infinite-scroll)
    - [Route as Modal](https://github.com/yilingtung/github-explorer#route-as-modal)
+   - [Caching](https://github.com/yilingtung/github-explorer#caching)
+   - [Memoization](https://github.com/yilingtung/github-explorer#memoization)
+   - [Dynamic Import & Route Based Splitting](https://github.com/yilingtung/github-explorer#dynamic-import--route-based-splitting)
 3. [**File Structure**](https://github.com/yilingtung/github-explorer#file-structure)
 4. [**Build With**](https://github.com/yilingtung/github-explorer#build-with)
-5. [**Code Quality & Test**](https://github.com/yilingtung/github-explorer#code-quality--test)
+5. [**Code Quality & Testing**](https://github.com/yilingtung/github-explorer#code-quality--testing)
 6. [**Reference**](https://github.com/yilingtung/github-explorer#reference)
 
 ## How To Use
@@ -60,48 +61,64 @@ $ yarn storybook
 
 ## Features
 
-#### Long List Virtualization
+### Long List Virtualization
 
-Only renders a small subset of your rows at any given time, and can dramatically reduce the time it takes to re-render the components as well as the number of DOM nodes created.
+To improve rendering performance. I use [react-window](https://github.com/bvaughn/react-window) with [react-window-scroller](https://github.com/FedericoDiRosa/react-window-scroller) to implement long list virtualization which based on the window's scroll positions. It only renders a small subset of your rows at any given time, and can dramatically reduce the time it takes to re-render the components as well as the number of DOM nodes created.
 
-<p align="center">
+<p align="start">
    <img src="/images/windowing.gif" width="600" >
-</p><br><br>
+</p>
 
-#### Lazy Load & Infinite Scroll
+It supports two way to display the list of repositories: "Row" and "Grid".
 
-<p align="center">
-   <img src="/images/infinite-scroll.gif" width="600" >
-</p><br><br>
-
-#### Filtering & Caching
-
-Support `type`, `sort`, `direction` to filtering organization's repos. Use [react-query](https://react-query.tanstack.com/) as state management and handles caching to prevent query refetching.
-
-<p align="center">
-   <img src="/images/filters.gif" width="600" >
-</p><br><br>
-
-#### Toggle List Arrangement
-
-Support two way to display the list of repositories: "Row" and "Grid".
-
-<p align="center">
+<p align="start">
    <img src="/images/list-display.gif" width="600" >
-</p><br><br>
+</p>
 
-#### Route as Modal
+### Lazy Load Data & Infinite Scroll
+
+Use Intersection Observer API to implement infinite scroll and data lazy-loading.
+
+<p align="start">
+   <img src="/images/infinite-scroll.gif" width="600" >
+</p>
+
+### Route as Modal
 
 Route as modal to quick viewing repo's detail and README.md for better user experiences ans SEO.<br>
 On many popular social media, opening a post will update the URL but won't trigger a navigation and will instead display the content inside a modal. This behavior ensures the user won't lose the current UI context (scroll position).
 
-<p align="center">
+<p align="start">
    <img src="/images/route-as-modal.gif" width="600" >
-</p><br><br>
+</p>
+
+### Caching
+
+To prevent query refetching. I choose [react-query](https://react-query.tanstack.com/) as a state management to handles fetched data and caching. <br>
+Use [Query Key factories](https://tkdodo.eu/blog/effective-react-query-keys) to keep query keys flexible and easy to maintain.
+
+![image](/images/caching.png)
+
+### Memoization
+
+In order to prevent unnecessary re-render, use react memoize function such as `React.memo`, `useMemo`, `useCallback`. And use with DevTools like `Profiler` to monitor application performance.
+
+![profiler](/images/profiler.jpg)
+
+### Dynamic Import & Route Based Splitting
+
+So as to reduce the bundle sizes, only load what you need.<br>
+Use `React.lazy` and `React.Suspense` to dynamically load the necessary bundles on demand. It's not only for components lazy loading, but also for the whole route.
+
+![image](/images/route-based-splitting.png)
 
 #### API Rate Limit
 
-Becouse Github API has [rate limit](https://docs.github.com/en/rest/overview/resources-in-the-rest-api) . Unauthenticated requests allows up to 10 requests per minute. That is why you may find infinite scroll becomes a button trigger sometimes.
+Becouse Github API has [rate limit](https://docs.github.com/en/rest/overview/resources-in-the-rest-api) . Unauthenticated requests allows up to 10 requests per minute. That is why you may find the page show some errors or infinite scroll becomes a button trigger sometimes.
+
+<p align="start">
+   <img src="/images/api-rate-limit.jpg" width="600" >
+</p>
 
 ## File Structure
 
@@ -144,8 +161,9 @@ types                               <-- interface, type
 - [styled-components](https://styled-components.com/)
 - [react-window](https://github.com/bvaughn/react-window)
 - [react-query](https://react-query.tanstack.com/)
+- [react-router-dom@v6](https://reactrouter.com/)
 
-## Code Quality & Test
+## Code Quality & Testing
 
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
@@ -156,4 +174,5 @@ types                               <-- interface, type
 
 - [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/)
 - [Long list windowing](https://zh-hant.reactjs.org/docs/optimizing-performance.html#virtualize-long-lists)
-- [angular commit message format](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit)
+- [Query key factories](https://tkdodo.eu/blog/effective-react-query-keys#use-query-key-factories)
+- [Angular commit message format](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit)
