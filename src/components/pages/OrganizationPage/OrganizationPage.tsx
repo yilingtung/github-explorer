@@ -62,12 +62,7 @@ export const OrganizationPage = ({ className }: OrganizationPageProps) => {
     status: fetchOrgStatus,
     data: orgData,
     error: fetchOrgError,
-  } = useOrganization(
-    { name: org as string },
-    {
-      staleTime: Infinity,
-    }
-  );
+  } = useOrganization({ name: org as string });
 
   return (
     <S.Container className={className}>

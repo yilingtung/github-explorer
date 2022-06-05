@@ -33,7 +33,7 @@ export const RepoPage = ({
     error: fetchRepoError,
   } = useRepo(
     { org: org as string, repoName: repo as string },
-    { enabled: !!true, staleTime: Infinity }
+    { enabled: !!true }
   );
 
   const { data: readmeData } = useReadme(
@@ -42,7 +42,7 @@ export const RepoPage = ({
       repoName: repo as string,
       defaultBarnch: repoData?.default_branch || '',
     },
-    { enabled: !!repoData?.default_branch, staleTime: Infinity }
+    { enabled: !!repoData?.default_branch }
   );
 
   return (

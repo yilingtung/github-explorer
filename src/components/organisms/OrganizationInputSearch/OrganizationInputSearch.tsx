@@ -31,7 +31,7 @@ export const OrganizationInputSearch = ({
     error: fetchSimpleOrganizationsError,
   } = useSimpleOrganizations(
     { name: debounceInputValue as string },
-    { enabled: !!debounceInputValue, staleTime: Infinity }
+    { enabled: !!debounceInputValue }
   );
 
   const handleInputChange = useCallback(

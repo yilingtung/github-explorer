@@ -13,10 +13,9 @@ const CardGroup = () => {
     status: fetchRecommendOrgsStatus,
     data: recommendOrgsData,
     error: fetchRecommendOrgsError,
-  } = useRecommendSimpleOrganizations(
-    { nameList: ['vercel', 'figma', 'mswjs', 'facebook', 'Dcard', 'strapi'] },
-    { staleTime: Infinity }
-  );
+  } = useRecommendSimpleOrganizations({
+    nameList: ['vercel', 'figma', 'mswjs', 'facebook', 'Dcard', 'strapi'],
+  });
 
   return (
     <S.CardGroup>

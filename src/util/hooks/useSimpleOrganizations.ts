@@ -18,6 +18,7 @@ const useSimpleOrganizations = (
     {
       retry: false,
       refetchOnWindowFocus: false,
+      staleTime: 600000, // 10 minutes
       ...options,
     }
   );

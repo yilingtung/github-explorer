@@ -52,7 +52,7 @@ const useRepos = (
           ? lastPageGroup.page + 1
           : undefined;
       },
-      staleTime: Infinity,
+      staleTime: 600000, // 10 minutes
       retry: false,
       refetchOnWindowFocus: false,
     }

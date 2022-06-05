@@ -16,7 +16,12 @@ const useReadme = (
   return useQuery<ResultData, Error, ResultData>(
     readmesKeys.detail({ org, repoName }),
     () => getReadme(params),
-    { retry: false, refetchOnWindowFocus: false, ...options }
+    {
+      retry: false,
+      refetchOnWindowFocus: false,
+      staleTime: 600000, // 10 minutes
+      ...options,
+    }
   );
 };
 
