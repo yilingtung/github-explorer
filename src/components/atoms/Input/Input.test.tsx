@@ -1,25 +1,39 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 import theme from '../../../styles/theme';
 import Input from './';
 
-const setup = (inputValue?: string) => {
-  const utils = render(
+test('input should has value as props passed', () => {
+  const handleChange = jest.fn();
+  render(
     <ThemeProvider theme={theme}>
-      <Input value={inputValue} onChange={() => console.log('onChange')} />
+      <Input value={'123'} onChange={handleChange} />
     </ThemeProvider>
   );
-  const input = utils.getByLabelText('input') as HTMLInputElement;
-  return {
-    input,
-    ...utils,
-  };
-};
+  const input = screen.getByLabelText('input') as HTMLInputElement;
 
-test('it should change input value to 123', () => {
-  const { input } = setup();
+  expect(input).toHaveValue('123');
+});
+
+test('change input should trigger onChange event', () => {
+  const handleChange = jest.fn();
+  render(
+    <ThemeProvider theme={theme}>
+      <Input onChange={handleChange} />
+    </ThemeProvider>
+  );
+  const input = screen.getByLabelText('input') as HTMLInputElement;
 
   fireEvent.change(input, { target: { value: '123' } });
-  expect(input.value).toBe('123');
+
+  expect(handleChange).toHaveBeenCalledTimes(1);
+
+  expect(handleChange).toHaveBeenCalledWith(
+    expect.objectContaining({
+      target: expect.objectContaining({
+        value: '123',
+      }),
+    })
+  );
 });

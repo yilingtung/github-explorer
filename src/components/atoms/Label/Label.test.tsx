@@ -1,26 +1,26 @@
 import { ThemeProvider } from 'styled-components';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import theme from '../../../styles/theme';
 import Label from '.';
 import { ReactComponent as CloseSvg } from '../../../assets/icons/close.svg';
 
-test('render currect label', () => {
-  const { getByText } = render(
+test('should render currect label', () => {
+  render(
     <ThemeProvider theme={theme}>
       <Label>Label</Label>
     </ThemeProvider>
   );
 
-  expect(getByText('Label')).toBeInTheDocument();
+  expect(screen.getByText('Label')).toBeInTheDocument();
 });
 
-test('render icon', () => {
-  const { getByTestId } = render(
+test('should render icon', () => {
+  render(
     <ThemeProvider theme={theme}>
       <Label Icon={() => <CloseSvg data-testid="svg" />}>With Icon</Label>
     </ThemeProvider>
   );
 
-  expect(getByTestId('svg')).toBeInTheDocument();
+  expect(screen.getByTestId('svg')).toBeInTheDocument();
 });
