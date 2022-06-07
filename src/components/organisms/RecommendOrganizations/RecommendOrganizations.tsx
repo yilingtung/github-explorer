@@ -19,7 +19,7 @@ const CardGroup = () => {
 
   return (
     <S.CardGroup>
-      {fetchRecommendOrgsStatus == 'idle' ||
+      {fetchRecommendOrgsStatus === 'idle' ||
       fetchRecommendOrgsStatus === 'loading' ? (
         <>
           {new Array(6).fill(0).map((_, index) => (

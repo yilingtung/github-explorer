@@ -9,9 +9,9 @@ import Loading from '../../atoms/Loading';
 import CardError from '../../molecules/CardError';
 import RepoProfile, { RepoProfileSkeleton } from '../../molecules/RepoProfile';
 
-const Readme = lazy(() => import('../../molecules/Readme'));
-
 import * as S from './styles';
+
+const Readme = lazy(() => import('../../molecules/Readme'));
 
 export interface RepoPageProps {
   className?: string;

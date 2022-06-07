@@ -15,10 +15,10 @@ import ReposFilters from '../../organisms/ReposFilters';
 import { ReactComponent as GridSvg } from '../../../assets/icons/grid.svg';
 import { ReactComponent as RowsSvg } from '../../../assets/icons/rows.svg';
 
+import * as S from './styles';
+
 const Modal = lazy(() => import('../../atoms/Modal'));
 const RepoPage = lazy(() => import('../RepoPage'));
-
-import * as S from './styles';
 
 const MainContent = () => {
   const [isGrid, setGrid] = useState(false);
