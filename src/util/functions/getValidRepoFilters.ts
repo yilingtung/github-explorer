@@ -2,8 +2,8 @@ import {
   GithubFilterDirection,
   GithubFilterSort,
   GithubFilterType,
-} from '../../../../types';
-import { filterTypes, filterSorts, filterDirections } from '../../filters';
+} from '../../../types';
+import { filterTypes, filterSorts, filterDirections } from '../filters';
 
 const getValidRepoFilters = (queries: Record<string, string>) => {
   const returnQueries = {

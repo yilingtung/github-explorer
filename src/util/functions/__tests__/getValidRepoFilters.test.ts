@@ -1,4 +1,4 @@
-import getValidRepoFilters from './';
+import getValidRepoFilters from '../getValidRepoFilters';
 
 test('give incorrect params should return undefined', () => {
   expect(

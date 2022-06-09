@@ -1,4 +1,4 @@
-import timeFormatter from '.';
+import timeFormatter from '../timeFormatter';
 
 test('give a valid string', () => {
   expect(timeFormatter('2012-03-08T02:10:13Z')).toBe('2012-03-08 10:10');
