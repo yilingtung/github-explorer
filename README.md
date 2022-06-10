@@ -122,7 +122,7 @@ Becouse Github API has [rate limit](https://docs.github.com/en/rest/overview/res
 
 ## File Structure
 
-Refer to [Atom design](http://bradfrost.com/blog/post/atomic-web-design/).
+Refer to [Atomic design](http://bradfrost.com/blog/post/atomic-web-design/).
 
 ```
 src
