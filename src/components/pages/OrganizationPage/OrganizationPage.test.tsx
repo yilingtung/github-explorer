@@ -92,4 +92,30 @@ describe('Organization page', () => {
     expect(await result.findByText('repo1')).toBeInTheDocument();
     expect(history.location.search).toBe('?direction=desc');
   });
+
+  test('click repo should update url', async () => {
+    const history = createMemoryHistory();
+    history.push('/facebook');
+
+    const result = customRender(
+      <Router location={history.location} navigator={history}>
+        <Routes>
+          <Route path="/:org" element={<OrganizationPage />} />
+        </Routes>
+      </Router>,
+      {
+        theme: true,
+        queryClient: true,
+      }
+    );
+
+    expect(await result.findByText(/repo description/)).toBeInTheDocument();
+
+    // click the repo should change url
+    fireEvent.click(screen.getByText(/repo description/));
+    expect(history.location.pathname).toBe('/facebook/repo1');
+
+    // should also update the state
+    expect(history.location.state).toEqual({ modal: true });
+  });
 });

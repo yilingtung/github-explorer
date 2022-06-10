@@ -15,7 +15,7 @@ export const handlers = [
           full_name: `${org}/repo1`,
           name: 'repo1',
           html_url: '',
-          description: '',
+          description: 'repo description',
           updated_at: '2022-05-30T05:22:41Z',
           language: 'JavaScript',
           stargazers_count: 100,
