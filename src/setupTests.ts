@@ -6,7 +6,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { setupServer } from 'msw/node';
 import { setLogger } from 'react-query';
 
-import { handlers } from './util/reactQueryTestHelper';
+import { handlers } from './util/tests/handlers';
 
 export const server = setupServer(...handlers);
 

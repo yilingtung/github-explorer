@@ -1,13 +1,14 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
-import { server } from '../../../setupTests';
 
-import { createWrapper } from '../../reactQueryTestHelper';
+import { server } from '../../../setupTests';
+import { createWrapper } from '../../tests/test-utils';
+
 import useRepos from '../useRepos';
 
 test('successful query useRepos', async () => {
   const { result } = renderHook(() => useRepos({ org: 'facebook' }), {
-    wrapper: createWrapper(),
+    wrapper: createWrapper({ queryClient: true }),
   });
 
   await waitFor(() => expect(result.current.isSuccess).toBe(true));
@@ -27,7 +28,7 @@ test('failure query useRepos', async () => {
   );
 
   const { result } = renderHook(() => useRepos({ org: 'facebook' }), {
-    wrapper: createWrapper(),
+    wrapper: createWrapper({ queryClient: true }),
   });
 
   await waitFor(() => expect(result.current.isError).toBe(true));
