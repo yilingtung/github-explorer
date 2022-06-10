@@ -1,5 +1,8 @@
 {
   "!*.{js,jsx,ts,tsx,sol,tf}": ["prettier --ignore-unknown --write"],
   "*.{js,jsx,ts,tsx}": ["prettier --write", "eslint --fix"],
-  "*.{ts,tsx}": ["bash -c tsc --noEmit"]
+  "*.{ts,tsx}": [
+    "react-scripts test --bail --watchAll=false --findRelatedTests --passWithNoTests",
+    "bash -c tsc --noEmit"
+  ]
 }
