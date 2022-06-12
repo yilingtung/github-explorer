@@ -6,26 +6,15 @@ import {
   filterSorts,
   filterDirections,
 } from '../../../util/filters';
-import capitalizeFirstLetter from '../../../util/functions/capitalizeFirstLetter';
+import getCapitalizeFilterOptions from '../../../util/functions/getCapitalizeFilterOptions';
 
 import Dropdown from '../../molecules/Dropdown';
 
 import * as S from './styles';
 
-const typeOptions = filterTypes.map((type) => ({
-  label: capitalizeFirstLetter(type),
-  value: type,
-}));
-
-const sortOptions = filterSorts.map((type) => ({
-  label: capitalizeFirstLetter(type),
-  value: type,
-}));
-
-const directionOptions = filterDirections.map((type) => ({
-  label: capitalizeFirstLetter(type),
-  value: type,
-}));
+const typeOptions = getCapitalizeFilterOptions(filterTypes);
+const sortOptions = getCapitalizeFilterOptions(filterSorts);
+const directionOptions = getCapitalizeFilterOptions(filterDirections);
 
 export interface ReposFiltersProps {
   className?: string;
@@ -34,6 +23,8 @@ export interface ReposFiltersProps {
 export const ReposFilters = React.memo(
   React.forwardRef<HTMLDivElement, ReposFiltersProps>(({ className }, ref) => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const searchQueries = Object.fromEntries(searchParams.entries());
+
     return (
       <S.Container ref={ref} className={className}>
         <Dropdown
@@ -43,7 +34,7 @@ export const ReposFilters = React.memo(
           value={searchParams.get('type') || filterTypes[0]}
           onChangeValue={(d) => {
             const { type, ...rest } = {
-              ...Object.fromEntries(searchParams.entries()),
+              ...searchQueries,
               type: d,
             };
             setSearchParams({
@@ -59,7 +50,7 @@ export const ReposFilters = React.memo(
           value={searchParams.get('sort') || filterSorts[0]}
           onChangeValue={(d) => {
             const { sort, ...rest } = {
-              ...Object.fromEntries(searchParams.entries()),
+              ...searchQueries,
               sort: d,
             };
             setSearchParams({
@@ -75,7 +66,7 @@ export const ReposFilters = React.memo(
           value={searchParams.get('direction') || filterDirections[0]}
           onChangeValue={(d) => {
             const { direction, ...rest } = {
-              ...Object.fromEntries(searchParams.entries()),
+              ...searchQueries,
               direction: d,
             };
             setSearchParams({
