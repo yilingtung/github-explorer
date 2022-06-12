@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { lazy, Suspense, useCallback, useMemo } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
@@ -6,11 +6,12 @@ import getValidRepoFilters from '../../../util/functions/getValidRepoFilters';
 import useRepos from '../../../util/hooks/useRepos';
 
 import RepoList from '../../molecules/RepoList';
-import RepoListGrid from '../../molecules/RepoListGrid';
 import HintText from '../../atoms/HintText';
 import Button from '../../atoms/Button';
 
 import * as S from './styles';
+
+const RepoListGrid = lazy(() => import('../../molecules/RepoListGrid'));
 
 export interface ReposContainerProps {
   className?: string;
@@ -84,18 +85,20 @@ export const ReposContainer = React.memo(
         <AutoSizer disableHeight style={{ width: '100%' }}>
           {({ width }) =>
             isGrid ? (
-              <RepoListGrid
-                listHeight={window.innerHeight}
-                listWidth={width}
-                data={formattedRepos || []}
-                disableFetchMore={fetchReposStatus === 'error'}
-                hasNextPage={hasNextPage}
-                isFetchingNextPage={isFetchingNextPage}
-                fetchNextPage={() => {
-                  fetchNextPage();
-                }}
-                onClickRepo={handleClickRepo}
-              />
+              <Suspense>
+                <RepoListGrid
+                  listHeight={window.innerHeight}
+                  listWidth={width}
+                  data={formattedRepos || []}
+                  disableFetchMore={fetchReposStatus === 'error'}
+                  hasNextPage={hasNextPage}
+                  isFetchingNextPage={isFetchingNextPage}
+                  fetchNextPage={() => {
+                    fetchNextPage();
+                  }}
+                  onClickRepo={handleClickRepo}
+                />
+              </Suspense>
             ) : (
               <RepoList
                 listHeight={window.innerHeight}
