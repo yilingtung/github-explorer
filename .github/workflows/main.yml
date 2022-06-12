@@ -26,14 +26,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 14
+          cache: 'yarn'
 
       # Runs a single command using the runners shell
       - name: install dependencies
-        run: npm install
+        run: yarn install --frozen-lockfile --immutable
 
       # Runs a single command using the runners shell
       - name: try to build the project
-        run: npm run build
+        run: PUBLIC_URL=/github-explorer yarn build
 
       # use actions-gh-pages to deploy build to gh-pages
       - name: Deploy
