@@ -15,6 +15,9 @@
 
 This project was bootstrapped with Create React App and TypeScript template.<br>
 Using route based splitting, long list virtualization, data lazy loading, caching to improve application performance.
+<br>
+
+> Here is another one which build with next.js. [Take a look. 👀](https://github.com/yilingtung/nextjs-github-explorer)
 
 ## Demo
 
@@ -39,7 +42,8 @@ You counld try the real app on github page. 👉🏻 [https://yilingtung.github.
 3. [**File Structure**](https://github.com/yilingtung/github-explorer#file-structure)
 4. [**Build With**](https://github.com/yilingtung/github-explorer#build-with)
 5. [**Code Quality & Testing**](https://github.com/yilingtung/github-explorer#code-quality--testing)
-6. [**Reference**](https://github.com/yilingtung/github-explorer#reference)
+6. [**Deploy**](https://github.com/yilingtung/github-explorer#deploy)
+7. [**Reference**](https://github.com/yilingtung/github-explorer#reference)
 
 ## How To Use
 
@@ -169,6 +173,10 @@ types                               <-- interface, type
 - [Prettier](https://prettier.io/)
 - [Husky](https://github.com/typicode/husky)
 - [react-testing-library](https://testing-library.com/docs/react-testing-library/intro/)
+
+## Deploy
+
+Automatically deploy to GitHub Pages with GitHub Actions and caching dependencies to speed up workflows.
 
 ## Reference
 
