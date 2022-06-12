@@ -8,7 +8,7 @@ import { ReactComponent as CheckSvg } from '../../../assets/icons/check.svg';
 import * as S from './styles';
 
 interface SelectValue {
-  value: any;
+  value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   label: string;
 }
 

@@ -25,34 +25,36 @@ interface ProviderOptions {
 
 const Providers = ({
   children,
-  options,
+  options = {},
 }: {
   children: React.ReactNode;
   options?: ProviderOptions;
 }) => {
   const history = createMemoryHistory();
-  history.push('/Dcard');
   const testQueryClient = createTestQueryClient();
 
-  return (
-    <ProviderComposer
-      providers={[
-        options?.router ? (
+  const providers: React.ReactElement[] = [];
+  Object.entries(options).forEach(([key, value]) => {
+    switch (true) {
+      case key === 'router':
+        providers.push(
           <Router location={history.location} navigator={history} />
-        ) : (
-          <></>
-        ),
-        options?.queryClient ? (
-          <QueryClientProvider client={testQueryClient} />
-        ) : (
-          <></>
-        ),
-        options?.theme ? <ThemeProvider theme={theme} /> : <></>,
-      ]}
-    >
-      {children}
-    </ProviderComposer>
-  );
+        );
+        break;
+
+      case key === 'queryClient' && value:
+        providers.push(<QueryClientProvider client={testQueryClient} />);
+        break;
+
+      case key === 'theme' && value:
+        providers.push(<ThemeProvider theme={theme} />);
+        break;
+      default:
+        break;
+    }
+  });
+
+  return <ProviderComposer providers={providers}>{children}</ProviderComposer>;
 };
 
 export const customRender = (

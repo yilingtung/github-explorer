@@ -10,6 +10,7 @@ import OrganizationPage from './';
 jest.mock(
   'react-virtualized-auto-sizer',
   () =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ({ children }: any) =>
       children({ height: 600, width: 600 })
 );

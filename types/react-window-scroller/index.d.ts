@@ -17,7 +17,7 @@ declare module 'react-window-scroller' {
       ref: MutableRefObject<FixedSizeList | FixedSizeGrid>;
       outerRef: Ref;
       style: CSSProperties;
-      onScroll: (props: ListOnScrollProps | GridOnScrollProps) => any;
+      onScroll: (props: ListOnScrollProps | GridOnScrollProps) => void;
     }) => React.ReactNode;
     /** Timing (ms) for the throttle on window scroll event handler */
     throttleTime?: number;

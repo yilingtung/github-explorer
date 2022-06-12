@@ -1,4 +1,3 @@
-import { fireEvent, screen } from '@testing-library/react';
 import { Router, Routes, Route } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
