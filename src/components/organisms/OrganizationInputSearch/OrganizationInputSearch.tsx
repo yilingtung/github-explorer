@@ -60,17 +60,14 @@ export const OrganizationInputSearch = ({
     navigateToOrganization(inputValue);
   }, [navigateToOrganization, inputValue]);
 
-  const handleSelectOption = useCallback(
-    (
-      name: string,
-      _setSuggestionOpen: React.Dispatch<React.SetStateAction<boolean>>
-    ) => {
-      _setSuggestionOpen(false);
-      setInputValue(name);
-      navigateToOrganization(name);
-    },
-    [navigateToOrganization]
-  );
+  const handleSelectOption = (
+    name: string,
+    _setSuggestionOpen: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    _setSuggestionOpen(false);
+    setInputValue(name);
+    navigateToOrganization(name);
+  };
 
   const renderSuggestions = ({
     setSuggestionOpen,

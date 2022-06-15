@@ -1,4 +1,4 @@
-import { useCallback, useRef, memo } from 'react';
+import { useRef, memo } from 'react';
 import { FixedSizeGrid, FixedSizeGridProps, areEqual } from 'react-window';
 import { ReactWindowScroller } from 'react-window-scroller';
 
@@ -44,31 +44,28 @@ export const RepoListGrid = memo(
     // handle infinite scroll
     const observer = useRef<IntersectionObserver | null>(null);
     // will be call every single time when component rerender
-    const lastElementRef = useCallback(
-      (node: HTMLDivElement | null) => {
-        if (disableFetchMore || isFetchingNextPage) {
-          return;
+    const lastElementRef = (node: HTMLDivElement | null) => {
+      if (disableFetchMore || isFetchingNextPage) {
+        return;
+      }
+      // disconnect observer from previous element before reconnet
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+      observer.current = new IntersectionObserver((enties) => {
+        if (
+          enties[0].isIntersecting &&
+          hasNextPage &&
+          typeof fetchNextPage === 'function'
+        ) {
+          fetchNextPage();
         }
-        // disconnect observer from previous element before reconnet
-        if (observer.current) {
-          observer.current.disconnect();
-        }
-        observer.current = new IntersectionObserver((enties) => {
-          if (
-            enties[0].isIntersecting &&
-            hasNextPage &&
-            typeof fetchNextPage === 'function'
-          ) {
-            fetchNextPage();
-          }
-        });
+      });
 
-        if (node) {
-          observer.current.observe(node);
-        }
-      },
-      [disableFetchMore, isFetchingNextPage, hasNextPage, fetchNextPage]
-    );
+      if (node) {
+        observer.current.observe(node);
+      }
+    };
 
     const renderRepos: FixedSizeGridProps['children'] = memo(
       ({ columnIndex, rowIndex, style }) => {
